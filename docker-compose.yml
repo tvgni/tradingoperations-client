@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    volumes:
+      - node_modules-data:/home/tvgni/app/node_modules
+    command: ["npm", "run", "dev"]
+volumes:
+  node_modules-data:

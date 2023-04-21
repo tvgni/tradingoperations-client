@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from './page.module.css'
-
+import MyButton from "@/app/Button";
 const inter = Inter({ subsets: ['latin'] })
+
 
 export default function Home() {
   return (
@@ -30,7 +31,7 @@ export default function Home() {
           </a>
         </div>
       </div>
-
+      <MyButton />
       <div className={styles.center}>
         <Image
           className={styles.logo}
