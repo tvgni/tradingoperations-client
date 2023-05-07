@@ -19,7 +19,10 @@
     "next": "^13.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "4.9.5"
+    "react-pro-sidebar": "^1.0.0",
+    "react-router-dom": "^6.11.1",
+    "typescript": "4.9.5",
+    "vitedge": "^0.19.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
