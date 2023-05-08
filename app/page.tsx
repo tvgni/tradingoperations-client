@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from './page.module.css'
@@ -6,88 +5,7 @@ import MyButton from "@/app/Button";
 const inter = Inter({ subsets: ['latin'] })
 
 
-
-
-
-
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import Base from './Base';
-import Sidebar from './Sidebar';
-import Productos from './Usuarios';
-
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Usuarios from './Usuarios';
-import Informe from './Informe';
-
-
-///ReactDOM.render(<Base/>, document.getElementById('root'));
-
-
-//import ReactDOMServer from 'react-dom/server';
-//import Base from './Base'; // importa el componente Base
-
-
-//ReactDOMServer.renderToString(<Base />);
-
-
-
-
-
-
 export default function Home() {
-  
-  return (
-
-  
-
-    <main className={styles.main}>
-      
-      <div className="container">
-
-      <BrowserRouter>
-            
-            <Routes>
-              <Route  path="/usuarios" Component={Usuarios} />
-            </Routes>
-  
-            <Routes>
-              <Route  path="/informe" Component={Informe} />
-            </Routes>
-  
-            <Sidebar />
-        </BrowserRouter>
-     
-       
-      </div>
-        
-    </main>
-
-
-  )}
-
-/*export default function Home() {
-  const [currentPage, setCurrentPage] = useState('Inicio');
-  // ...
-
-  function handlePageChange(newPage) {
-      setCurrentPage(newPage);
-  }
-
-
-  return (
-      <div>
-        <Sidebar onPageChange={handlePageChange} />
-        {currentPage === 'Inicio' && <Inicio />}
-        {currentPage === 'Productos' && <Productos />}
-        {currentPage === 'Contacto' && <Contacto />}
-      </div>
-
-);
-
-}*/
-
-/*export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -171,4 +89,4 @@ export default function Home() {
       </div>
     </main>
   )
-}*/
+}
