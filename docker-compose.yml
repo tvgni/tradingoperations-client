@@ -6,6 +6,7 @@ services:
       - "3000:3000"
     volumes:
       - node_modules-data:/home/tvgni/app/node_modules
+      - ./:/home/tvgni/app
     command: [ "npm", "run", "dev" ]
 
 volumes:
