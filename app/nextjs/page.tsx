@@ -1,9 +1,7 @@
-import { user } from '@/utils/auth0';
+import { user } from '@/utils/auth0.page';
 
 export default async function Page() {
   const session = await user();
-
-  console.log(session?.user);
 
   return (
     <div>

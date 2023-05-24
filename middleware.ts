@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { user } from './utils/auth0';
+import { _user } from './utils/auth0.middleware';
 
 export async function middleware(request: NextRequest) {
-  const session = await user();
+  const session = await _user(request.headers);
   console.log(session);
-
   return NextResponse.next();
 }
 
