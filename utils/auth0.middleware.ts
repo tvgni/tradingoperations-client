@@ -4,7 +4,7 @@ async function getProfile(
   headers: Headers
 ): Promise<{ isAuthenticated: boolean; user: Auth0User | null }> {
   try {
-    const data = await fetch(`http://localhost:3000/api/auth/me`, {
+    const data = await fetch(`${process.env.AUTH0_BASE_URL}/api/auth/me`, {
       method: 'GET',
       headers: headers,
     });
