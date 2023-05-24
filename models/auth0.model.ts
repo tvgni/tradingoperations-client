@@ -1,19 +1,22 @@
-export interface Auth0TokenInfo {
-  access_token: string | undefined;
-  scope: string | undefined;
-  expires_in: number | undefined;
-  token_type: string | undefined;
+export interface Auth0UserInfo {
+  user: Auth0User;
+  accessToken: string;
+  accessTokenScope: string;
+  accessTokenExpiresAt: number;
+  idToken: string;
+  token_type: string;
 }
 
-export interface Auth0UserInfo {
-  email: string | undefined;
-  email_verified: boolean | undefined;
-  family_name: number | undefined;
-  given_name: string | undefined;
-  locale: string | undefined;
-  name: string | undefined;
-  nickname: string | undefined;
-  picture: string | undefined;
-  sub: string | undefined;
-  updated_at: string | undefined;
+export interface Auth0User {
+  given_name: string;
+  family_name: string;
+  nickname: string;
+  name: string;
+  picture: string;
+  locale: string;
+  updated_at: Date;
+  email: string;
+  email_verified: boolean;
+  sub: string;
+  sid: string;
 }
