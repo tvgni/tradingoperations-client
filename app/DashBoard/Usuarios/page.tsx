@@ -1,8 +1,9 @@
+import '../../globals.css';
 import { AutoLayout } from 'devextreme-react/diagram';
 
 export default function UsuariosPage() {
   return (
-    <div style={{ padding: '0 20px', height: '1200px', overflow: 'auto' }}>
+    <div className={'pagecontainer'}>
       <h4 style={{ borderBottom: '1px solid red' }}>Usuarios Page!</h4>
 
       <p style={{ display: 'block' }}>

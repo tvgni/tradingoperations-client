@@ -1,6 +1,8 @@
+import '../../globals.css';
+
 export default function InformesPage() {
   return (
-    <div style={{ padding: '0 20px', height: '1200px', overflow: 'auto' }}>
+    <div className="pagecontainer">
       <h4 style={{ borderBottom: '1px solid red' }}>Informes Page!</h4>
       <p>
         is simply dummy text of the printing and typesetting industry. Lorem
