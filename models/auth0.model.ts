@@ -1,13 +1,13 @@
 export interface Auth0UserInfo {
-  user: Auth0User;
-  accessToken: string;
-  accessTokenScope: string;
-  accessTokenExpiresAt: number;
-  idToken: string;
+  accessToken: string | undefined;
+  accessTokenScope: string | undefined;
+  accessTokenExpiresAt: number | undefined;
+  idToken: string | undefined;
   token_type: string;
 }
 
 export interface Auth0User {
+  role: string;
   given_name: string;
   family_name: string;
   nickname: string;

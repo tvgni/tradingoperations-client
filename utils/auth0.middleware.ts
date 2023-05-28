@@ -15,7 +15,7 @@ async function getProfile(
     };
   } catch (error) {
     return {
-      isAuthenticated: true,
+      isAuthenticated: false,
       user: null,
     };
   }
