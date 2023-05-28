@@ -1,31 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 import Drawer from 'devextreme-react/drawer';
-import RadioGroup from 'devextreme-react/radio-group';
 import Toolbar from 'devextreme-react/toolbar';
-//import "devextreme/dist/css/dx.ma";
-import DropDownButton, { ToolbarItem } from 'devextreme-react/drop-down-button';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
-import HTMLReactParser from 'html-react-parser';
-
-import { text } from './menus';
 import NavigationList from './NavigationList';
-
-import Link from 'next/link';
-import { options } from 'inferno';
-//import { Link } from 'react-router-dom';
 
 const openedStateModes = ['push', 'shrink', 'overlap'];
 const positions = ['left', 'right'];
 const revealModes = ['slide', 'expand'];
-
-function renderLabel() {
-  return (
-    <div className="toolbar-label">
-      <b>Tom&apos;s Club</b> Products
-    </div>
-  );
-}
 
 const MenuLeft = ({ children }) => {
   const [opened, setOpened] = useState(true);
@@ -36,13 +18,6 @@ const MenuLeft = ({ children }) => {
   const handleLinkClick = () => {
     window.location.replace('http://localhost:3000/DashBoard/Profile');
     //window.redirect.open('http://localhost:3000/DashBoard/Profile', '_blank');
-  };
-
-  const toolbarTitleStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
   };
 
   const toolbarItems = [
@@ -106,12 +81,16 @@ const MenuLeft = ({ children }) => {
         revealMode={revealMode}
         component={NavigationList}
         closeOnOutsideClick={onOutsideClick}
-        height="92vh"
+        height="95vh"
+        //style={{ height:'95vh' }}
         //height={800}
         //style={{ background: '#f2f2f2' }}
-        style={{ overflow: 'hidden' }}
       >
-        <div id="content" className="dx-theme-background-color">
+        <div
+          style={{ overflow: 'hidden' }}
+          id="content"
+          className="dx-theme-background-color"
+        >
           {children}
         </div>
       </Drawer>

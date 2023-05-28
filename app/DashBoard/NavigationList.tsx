@@ -29,11 +29,6 @@ const ListItem = (data) => {
       <i className={`dx-icon dx-icon-${data.icon} dx-list-item-icon`}></i>{' '}
       {data.text}
     </Link>
-    /* <div>
-          <b>{ data.name }</b>
-          <br />
-          <p style={{ margin: '0px' }}>{ data.text }</p>
-      </div>*/
   );
 };
 
