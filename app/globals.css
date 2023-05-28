@@ -4,6 +4,9 @@
 
 body {
     margin: 0;
+    overflow: hidden;
+    min-height: 125vh;
+    white-space: nowrap;
   }
 
   

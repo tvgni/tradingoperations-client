@@ -32,7 +32,7 @@ const MenuLeft = ({ children }) => {
     {
       location: 'before',
       showText: true,
-      text: 'Trading Site',
+      text: 'Trading Como Negocio',
     },
     {
       location: 'after',
@@ -41,7 +41,7 @@ const MenuLeft = ({ children }) => {
       options: {
         //deferRendering: true,
         text: 'Orlando Chavaria',
-        icon: 'user',
+        icon: 'https://s.gravatar.com/avatar/88456a52085bc5ba4d38b425c2b7d0e2?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Flc.png',
         //onClick: handleLinkClick,
         items: [
           {
@@ -81,16 +81,8 @@ const MenuLeft = ({ children }) => {
         revealMode={revealMode}
         component={NavigationList}
         closeOnOutsideClick={onOutsideClick}
-        height="95vh"
-        //style={{ height:'95vh' }}
-        //height={800}
-        //style={{ background: '#f2f2f2' }}
       >
-        <div
-          style={{ overflow: 'hidden' }}
-          id="content"
-          className="dx-theme-background-color"
-        >
+        <div id="content" className="dx-theme-background-color">
           {children}
         </div>
       </Drawer>

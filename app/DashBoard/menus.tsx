@@ -8,8 +8,8 @@ export const menuTrader = [{ id: 1, text: 'Dashboard', icon: 'product' }];
 
 export const menuAdmin = [
   { id: 1, text: 'Dashboard', icon: 'product', path: '/DashBoard' },
-  { id: 2, text: 'Employees', icon: 'card', path: '/DashBoard/Usuarios' },
-  { id: 3, text: 'Reports', icon: 'chart', path: '/DashBoard/Informes' },
+  { id: 2, text: 'Empleados', icon: 'card', path: '/DashBoard/Usuarios' },
+  { id: 3, text: 'Informes', icon: 'chart', path: '/DashBoard/Informes' },
 ];
 
 export const menu = [

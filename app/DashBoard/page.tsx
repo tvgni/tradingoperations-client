@@ -1,6 +1,6 @@
 export default function DashboarPage() {
   return (
-    <div style={{ padding: '0 20px' }}>
+    <div style={{ padding: '0 20px', overflow: 'visible' }}>
       <h4 style={{ borderBottom: '1px solid red' }}>Dashboard Page!</h4>
 
       <p>
