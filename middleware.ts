@@ -5,7 +5,7 @@ import { _user } from './utils/auth0.middleware';
 export async function middleware(request: NextRequest) {
   const session = await _user(request.headers);
 
-  //console.log(request.nextUrl.pathname);
+  console.log(request.nextUrl.pathname);
 
   if (request.nextUrl.pathname === '/login') {
     if (session.isAuthenticated) {
@@ -22,5 +22,14 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/', '/login'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 };

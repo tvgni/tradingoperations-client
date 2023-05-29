@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
+  webpack: (config, { isServer, webpack }) => {
 
     if (isServer) {
       config.resolve.alias['superagent-proxy'] = false;
