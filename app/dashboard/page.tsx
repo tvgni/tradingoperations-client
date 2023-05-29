@@ -1,6 +1,6 @@
 import '../globals.css';
 
-export default function DashboarPage() {
+export default function dashboarpage() {
   return (
     <div className="pagecontainer">
       <h4 style={{ borderBottom: '1px solid red' }}>Dashboard Page!</h4>

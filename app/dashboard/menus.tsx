@@ -7,9 +7,9 @@
 export const menuTrader = [{ id: 1, text: 'Dashboard', icon: 'product' }];
 
 export const menuAdmin = [
-  { id: 1, text: 'Dashboard', icon: 'product', path: '/DashBoard' },
-  { id: 2, text: 'Empleados', icon: 'card', path: '/DashBoard/Usuarios' },
-  { id: 3, text: 'Informes', icon: 'chart', path: '/DashBoard/Informes' },
+  { id: 1, text: 'Dashboard', icon: 'product', path: '/dashboard' },
+  { id: 2, text: 'Empleados', icon: 'card', path: '/dashboard/usuarios' },
+  { id: 3, text: 'Informes', icon: 'chart', path: '/dashboard/informes' },
 ];
 
 export const menu = [

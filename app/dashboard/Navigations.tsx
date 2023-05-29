@@ -16,7 +16,7 @@ const MenuLeft = ({ children }) => {
   const [position, setPosition] = useState('left');
 
   const handleLinkClick = () => {
-    window.location.replace('http://localhost:3000/DashBoard/Profile');
+    window.location.replace('http://localhost:3000/dashboard/profile');
     //window.redirect.open('http://localhost:3000/DashBoard/Profile', '_blank');
   };
 
