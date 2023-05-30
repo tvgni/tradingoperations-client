@@ -56,7 +56,7 @@ const MenuLeft = ({
           {
             text: 'Cerrar Sesion',
             onClick: () => {
-              // Lógica para la opción 2
+              window.location.replace('api/auth/logout');
             },
           },
         ],
