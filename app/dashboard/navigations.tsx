@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Drawer from 'devextreme-react/drawer';
 import Toolbar from 'devextreme-react/toolbar';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
-import NavigationList from './NavigationList';
+import NavigationList from './navigationlist';
 
 const openedStateModes = ['push', 'shrink', 'overlap'];
 const positions = ['left', 'right'];
@@ -17,7 +17,6 @@ const MenuLeft = ({ children }) => {
 
   const handleLinkClick = () => {
     window.location.replace('http://localhost:3000/dashboard/profile');
-    //window.redirect.open('http://localhost:3000/DashBoard/Profile', '_blank');
   };
 
   const toolbarItems = [
@@ -80,7 +79,7 @@ const MenuLeft = ({ children }) => {
         position={position}
         revealMode={revealMode}
         component={NavigationList}
-        closeOnOutsideClick={onOutsideClick}
+        //closeOnOutsideClick={onOutsideClick}
       >
         <div id="content" className="dx-theme-background-color">
           {children}

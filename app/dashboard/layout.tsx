@@ -1,4 +1,4 @@
-import MenuLeft from './Navigations';
+import MenuLeft from './navigations';
 
 export default function RootLayout({
   children,

@@ -6,21 +6,6 @@ import { menuAdmin } from './menus';
 import List, { Item } from 'devextreme-react/list';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { Background } from 'devextreme-react/range-selector';
-
-const renderCustomItemDashboard = () => {
-  return <Link href="/DashBoard">Dashboard</Link>;
-};
-
-const renderCustomItemUsuarios = () => {
-  return <Link href="/DashBoard/Usuarios">Usuarios</Link>;
-};
-
-const renderCustomItemInformes = () => {
-  return <Link href="/DashBoard/Informes">Informes</Link>;
-};
 
 const ListItem = (data) => {
   return (
