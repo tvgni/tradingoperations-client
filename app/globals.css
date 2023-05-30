@@ -18,3 +18,11 @@ body {
 .dx-dropdownbutton {
   margin-right: 20px;
 }
+
+img.dx-icon {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50%;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}

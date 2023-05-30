@@ -42,19 +42,19 @@ const MenuLeft = ({
     },
     {
       location: 'after',
-      //widget: 'dxButton',
       widget: dxDropDownButton,
       options: {
-        //deferRendering: true,
         text: session.user?.nickname,
         icon: session.user?.picture,
         items: [
           {
             text: 'Mi Perfil',
+            icon: 'user',
             onClick: handleLinkClick,
           },
           {
             text: 'Cerrar Sesion',
+            icon: 'clearsquare',
             onClick: () => {
               window.location.replace('api/auth/logout');
             },
@@ -71,13 +71,6 @@ const MenuLeft = ({
   return (
     <React.Fragment>
       <Toolbar style={{ background: '#f2f2f2' }} items={toolbarItems}></Toolbar>
-
-      {/* <Toolbar>
-            <ToolbarItem widget="dxButton" options={{ text: 'Antes' }} />
-            <ToolbarItem widget="dxDropDownButton" options={{ text: 'Texto en el centro' }} />
-            <ToolbarItem widget="dxButton" options={{ text: 'Después' }} />
-        </Toolbar>*/}
-
       <Drawer
         className=""
         opened={opened}
@@ -85,7 +78,6 @@ const MenuLeft = ({
         position={position}
         revealMode={revealMode}
         component={NavigationList}
-        //closeOnOutsideClick={onOutsideClick}
       >
         <div id="content" className="dx-theme-background-color">
           {children}
