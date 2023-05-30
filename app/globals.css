@@ -4,4 +4,13 @@
 
 body {
   margin: 0;
+  overflow: hidden;
+  min-height: 125vh;
+  white-space: nowrap;
+}
+
+.pagecontainer {
+  padding: 0 20px !important;
+  height: 1200px !important;
+  overflow: auto !important;
 }

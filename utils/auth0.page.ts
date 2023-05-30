@@ -2,7 +2,7 @@ import { headers } from 'next/headers';
 import { getSession as auth0GetSession } from '@auth0/nextjs-auth0';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Socket } from 'net';
-import { Auth0User, Auth0UserInfo } from '@/models/auth0.model';
+import { Auth0User, authUser } from '@/models/auth0.model';
 
 const requestResponseIntersector = () => {
   const request = new IncomingMessage(new Socket());
@@ -13,11 +13,7 @@ const requestResponseIntersector = () => {
   return { req: request, res };
 };
 
-export async function user(): Promise<{
-  isAuthenticated: boolean;
-  user: Auth0User | null | undefined;
-  tokenInfo: Auth0UserInfo | null | undefined;
-}> {
+export async function user(): Promise<authUser> {
   const { req, res } = requestResponseIntersector();
 
   const session = await auth0GetSession(req, res);

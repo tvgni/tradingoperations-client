@@ -20,3 +20,9 @@ export interface Auth0User {
   sub: string;
   sid: string;
 }
+
+export interface authUser {
+  isAuthenticated: boolean;
+  user: Auth0User | null | undefined;
+  tokenInfo: Auth0UserInfo | null | undefined;
+}

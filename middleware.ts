@@ -7,13 +7,13 @@ export async function middleware(request: NextRequest) {
 
   console.log(request.nextUrl.pathname);
 
-  if (request.nextUrl.pathname === '/login') {
+  if (request.nextUrl.pathname === '/') {
     if (session.isAuthenticated) {
-      return NextResponse.redirect(new URL('/', request.url));
+      return NextResponse.redirect(new URL('/dashboard', request.url));
     }
   } else {
     if (!session.isAuthenticated) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
