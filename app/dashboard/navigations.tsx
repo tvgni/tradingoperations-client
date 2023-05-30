@@ -5,6 +5,8 @@ import Toolbar from 'devextreme-react/toolbar';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
 import NavigationList from './navigationlist';
 
+import { useRouter } from 'next/navigation';
+
 const openedStateModes = ['push', 'shrink', 'overlap'];
 const positions = ['left', 'right'];
 const revealModes = ['slide', 'expand'];
@@ -15,8 +17,20 @@ const MenuLeft = ({ children }) => {
   const [revealMode, setRevealMode] = useState('slide');
   const [position, setPosition] = useState('left');
 
+  //const {push} = useRouter();
+  const router = useRouter();
+
   const handleLinkClick = () => {
-    window.location.replace('http://localhost:3000/dashboard/profile');
+    router.push('/dashboard/profile');
+
+    /*useEffect(() => {
+      const {pathname} = Router
+      if(pathname == '/' ){
+          Router.push('/hello-nextjs')
+      }
+    });*/
+
+    //window.location.replace('http://localhost:3000/dashboard/profile');
   };
 
   const toolbarItems = [
