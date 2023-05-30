@@ -1,5 +1,5 @@
 import { user } from '@/utils/auth0.page';
-import MenuLeft from './Navigations';
+import MenuLeft from './navigations';
 
 export default async function RootLayout({
   children,
@@ -7,5 +7,5 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const userSession = await user();
-  return <MenuLeft user={userSession}>{children}</MenuLeft>;
+  return <MenuLeft session={userSession}>{children}</MenuLeft>;
 }

@@ -14,3 +14,7 @@ body {
   height: 1200px !important;
   overflow: auto !important;
 }
+
+.dx-dropdownbutton {
+  margin-right: 20px;
+}

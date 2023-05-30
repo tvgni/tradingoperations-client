@@ -3,22 +3,27 @@ import React, { useState } from 'react';
 import Drawer from 'devextreme-react/drawer';
 import Toolbar from 'devextreme-react/toolbar';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
-import NavigationList from './NavigationList';
+import NavigationList from './navigationlist';
+
+import { useRouter } from 'next/navigation';
 import { authUser } from '@/models/auth0.model';
 
-const openedStateModes = ['push', 'shrink', 'overlap'];
-const positions = ['left', 'right'];
-const revealModes = ['slide', 'expand'];
-
-const MenuLeft = ({ user, children }: { user: authUser; children: any }) => {
+const MenuLeft = ({
+  session,
+  children,
+}: {
+  session: authUser;
+  children: any;
+}) => {
   const [opened, setOpened] = useState(true);
   const [openedStateMode, setOpenedStateMode] = useState('shrink');
   const [revealMode, setRevealMode] = useState('slide');
   const [position, setPosition] = useState('left');
 
+  const router = useRouter();
+
   const handleLinkClick = () => {
-    window.location.replace('http://localhost:3000/dashboard/profile');
-    //window.redirect.open('http://localhost:3000/DashBoard/Profile', '_blank');
+    router.push('/dashboard/profile');
   };
 
   const toolbarItems = [
@@ -41,9 +46,8 @@ const MenuLeft = ({ user, children }: { user: authUser; children: any }) => {
       widget: dxDropDownButton,
       options: {
         //deferRendering: true,
-        text: user.user?.nickname,
-        icon: user.user?.picture,
-        //onClick: handleLinkClick,
+        text: session.user?.nickname,
+        icon: session.user?.picture,
         items: [
           {
             text: 'Mi Perfil',
@@ -52,7 +56,7 @@ const MenuLeft = ({ user, children }: { user: authUser; children: any }) => {
           {
             text: 'Cerrar Sesion',
             onClick: () => {
-              window.location.replace('api/auth/logout');
+              // Lógica para la opción 2
             },
           },
         ],
@@ -81,7 +85,7 @@ const MenuLeft = ({ user, children }: { user: authUser; children: any }) => {
         position={position}
         revealMode={revealMode}
         component={NavigationList}
-        closeOnOutsideClick={onOutsideClick}
+        //closeOnOutsideClick={onOutsideClick}
       >
         <div id="content" className="dx-theme-background-color">
           {children}
