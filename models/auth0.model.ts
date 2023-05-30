@@ -1,9 +1,9 @@
 export interface Auth0UserInfo {
-  accessToken: string | undefined;
-  accessTokenScope: string | undefined;
-  accessTokenExpiresAt: number | undefined;
-  idToken: string | undefined;
-  token_type: string;
+  accessToken?: string;
+  accessTokenScope?: string;
+  accessTokenExpiresAt?: number;
+  idToken?: string;
+  token_type?: string;
 }
 
 export interface Auth0User {
@@ -23,6 +23,6 @@ export interface Auth0User {
 
 export interface authUser {
   isAuthenticated: boolean;
-  user: Auth0User | null | undefined;
-  tokenInfo: Auth0UserInfo | null | undefined;
+  user?: Auth0User;
+  tokenInfo?: Auth0UserInfo;
 }

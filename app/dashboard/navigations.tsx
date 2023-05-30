@@ -56,7 +56,7 @@ const MenuLeft = ({
             text: 'Cerrar Sesion',
             icon: 'clearsquare',
             onClick: () => {
-              window.location.replace('api/auth/logout');
+              window.location.replace('/api/auth/logout');
             },
           },
         ],
