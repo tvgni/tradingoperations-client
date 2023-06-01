@@ -7,6 +7,7 @@ import DataGrid, {
   Pager,
   Editing,
   Lookup,
+  FilterRow,
 } from 'devextreme-react/data-grid';
 import { DropDownButton } from 'devextreme-react/button';
 import DropDownBox from 'devextreme-react/drop-down-box';
@@ -17,6 +18,7 @@ export const customers = [
   {
     ID: 1,
     Nombre: 'Anika',
+    Apellido: 'Ruiz',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
     Estado: 2,
@@ -24,6 +26,7 @@ export const customers = [
   {
     ID: 2,
     Nombre: 'Andrea',
+    Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
     Estado: 1,
@@ -31,6 +34,7 @@ export const customers = [
   {
     ID: 2,
     Nombre: 'Adrian',
+    Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
     Estado: 2,
@@ -38,6 +42,47 @@ export const customers = [
   {
     ID: 2,
     Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
     Estado: 2,
@@ -110,7 +155,11 @@ export default function UsuariosPage() {
             editCellComponent={CustomEditCell}
           />*/}
 
+        <FilterRow visible={true} />
+
         <Column dataField="Nombre" />
+
+        <Column dataField="Apellido" />
 
         <Column dataField="Correo" />
 
@@ -124,6 +173,7 @@ export default function UsuariosPage() {
           mode="popup"
           allowUpdating={true}
           allowDeleting={true}
+          allowAdding={true}
           editCellComponent={CustomEditCell}
         ></Editing>
 
