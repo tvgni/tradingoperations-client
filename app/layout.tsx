@@ -1,5 +1,7 @@
 import './globals.css';
 import 'devextreme/dist/css/dx.material.blue.light.css';
+import React from 'react';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={'dx-viewport'}>{children}</body>
+      <UserProvider>
+        <body className={'dx-viewport'}>{children}</body>
+      </UserProvider>
     </html>
   );
 }

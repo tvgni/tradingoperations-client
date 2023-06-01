@@ -1,25 +1,27 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-    margin: 0;
-    overflow: hidden;
-    min-height: 125vh;
-    white-space: nowrap;
+  margin: 0;
+  overflow: hidden;
+  min-height: 125vh;
+  white-space: nowrap;
 }
 
 .pagecontainer {
-  padding:0 20px !important;
-  height:1200px !important; 
-  overflow:auto !important;
-
+  padding: 0 20px !important;
+  height: 1200px !important;
+  overflow: auto !important;
 }
-
 
 .dx-dropdownbutton {
-
   margin-right: 20px;
-  
 }
-  
+
+img.dx-icon {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50%;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
