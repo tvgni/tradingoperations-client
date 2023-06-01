@@ -4,16 +4,20 @@ import { Button, TextBox, CheckBox, FileUploader } from 'devextreme-react';
 
 const UserProfileForm = () => {
   const [name, setName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [subscribe, setSubscribe] = useState(false);
+
+  const [telefono, setTelefono] = useState('');
+
   const [avatar, setAvatar] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes realizar la lógica para guardar los datos del perfil del usuario
     console.log('Nombre:', name);
+    console.log('Apellido:', lastname);
+    console.log('Telefono:', telefono);
     console.log('Email:', email);
-    console.log('Subscripción:', subscribe);
     console.log('Avatar:', avatar);
   };
 
@@ -35,15 +39,40 @@ const UserProfileForm = () => {
           <label>Nombre:</label>
           <TextBox value={name} onValueChanged={setName} />
         </div>
+
+        <div>
+          <label>Apellido:</label>
+          <TextBox value={lastname} onValueChanged={setLastName} />
+        </div>
+
+        <div>
+          <label>Telefono:</label>
+          <TextBox value={telefono} onValueChanged={setTelefono} />
+        </div>
+
         <div>
           <label>Email:</label>
           <TextBox value={email} onValueChanged={setEmail} />
         </div>
-        <div>
-          <label>Suscribirse:</label>
-          <CheckBox value={subscribe} onValueChanged={setSubscribe} />
-        </div>
+
         <Button text="Guardar" type="success" useSubmitBehavior={true} />
+      </div>
+      <div>
+        <br></br>
+
+        <div style={{ padding: '0 20px' }}>
+          <div>
+            <label>Contraseña:</label>
+            <TextBox value={email} onValueChanged={setEmail} />
+          </div>
+
+          <div>
+            <label>Repetir-Contraseña:</label>
+            <TextBox value={email} onValueChanged={setEmail} />
+          </div>
+
+          <Button text="Guardar" type="success" useSubmitBehavior={true} />
+        </div>
       </div>
     </form>
   );

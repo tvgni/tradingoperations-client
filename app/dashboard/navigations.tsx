@@ -6,31 +6,24 @@ import dxDropDownButton from 'devextreme/ui/drop_down_button';
 import NavigationList from './navigationlist';
 
 import { useRouter } from 'next/navigation';
+import { authUser } from '@/models/auth0.model';
 
-const openedStateModes = ['push', 'shrink', 'overlap'];
-const positions = ['left', 'right'];
-const revealModes = ['slide', 'expand'];
-
-const MenuLeft = ({ children }) => {
+const MenuLeft = ({
+  session,
+  children,
+}: {
+  session: authUser;
+  children: any;
+}) => {
   const [opened, setOpened] = useState(true);
   const [openedStateMode, setOpenedStateMode] = useState('shrink');
   const [revealMode, setRevealMode] = useState('slide');
   const [position, setPosition] = useState('left');
 
-  //const {push} = useRouter();
   const router = useRouter();
 
   const handleLinkClick = () => {
     router.push('/dashboard/profile');
-
-    /*useEffect(() => {
-      const {pathname} = Router
-      if(pathname == '/' ){
-          Router.push('/hello-nextjs')
-      }
-    });*/
-
-    //window.location.replace('http://localhost:3000/dashboard/profile');
   };
 
   const toolbarItems = [
@@ -49,22 +42,21 @@ const MenuLeft = ({ children }) => {
     },
     {
       location: 'after',
-      //widget: 'dxButton',
       widget: dxDropDownButton,
       options: {
-        //deferRendering: true,
-        text: 'Orlando Chavaria',
-        icon: 'https://s.gravatar.com/avatar/88456a52085bc5ba4d38b425c2b7d0e2?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Flc.png',
-        //onClick: handleLinkClick,
+        text: session.user?.nickname,
+        icon: session.user?.picture,
         items: [
           {
             text: 'Mi Perfil',
+            icon: 'user',
             onClick: handleLinkClick,
           },
           {
             text: 'Cerrar Sesion',
+            icon: 'clearsquare',
             onClick: () => {
-              // Lógica para la opción 2
+              window.location.replace('/api/auth/logout');
             },
           },
         ],
@@ -79,13 +71,6 @@ const MenuLeft = ({ children }) => {
   return (
     <React.Fragment>
       <Toolbar style={{ background: '#f2f2f2' }} items={toolbarItems}></Toolbar>
-
-      {/* <Toolbar>
-            <ToolbarItem widget="dxButton" options={{ text: 'Antes' }} />
-            <ToolbarItem widget="dxDropDownButton" options={{ text: 'Texto en el centro' }} />
-            <ToolbarItem widget="dxButton" options={{ text: 'Después' }} />
-        </Toolbar>*/}
-
       <Drawer
         className=""
         opened={opened}
@@ -93,7 +78,6 @@ const MenuLeft = ({ children }) => {
         position={position}
         revealMode={revealMode}
         component={NavigationList}
-        //closeOnOutsideClick={onOutsideClick}
       >
         <div id="content" className="dx-theme-background-color">
           {children}

@@ -12,7 +12,7 @@ import DataGrid, {
 import { DropDownButton } from 'devextreme-react/button';
 import DropDownBox from 'devextreme-react/drop-down-box';
 
-const columns = ['Nombre', 'Correo', 'Telefono', 'Estado'];
+const columns = ['Nombre', 'Correo', 'Telefono', 'Role', 'Estado'];
 
 export const customers = [
   {
@@ -21,6 +21,7 @@ export const customers = [
     Apellido: 'Ruiz',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -29,6 +30,7 @@ export const customers = [
     Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 1,
   },
   {
@@ -37,6 +39,7 @@ export const customers = [
     Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -45,6 +48,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -53,6 +57,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -61,6 +66,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -69,6 +75,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -77,6 +84,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
   {
@@ -85,6 +93,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
+    Role: 'Administrador',
     Estado: 2,
   },
 ];
@@ -164,6 +173,8 @@ export default function UsuariosPage() {
         <Column dataField="Correo" />
 
         <Column dataField="Telefono" />
+
+        <Column dataField="Role" />
 
         <Column dataField="Estado" caption="Estado" width={125}>
           <Lookup dataSource={states} displayExpr="Name" valueExpr="ID" />
