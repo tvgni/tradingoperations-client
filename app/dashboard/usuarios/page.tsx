@@ -9,8 +9,9 @@ import DataGrid, {
   Lookup,
   FilterRow,
 } from 'devextreme-react/data-grid';
-import { DropDownButton } from 'devextreme-react/button';
+import Button, { DropDownButton } from 'devextreme-react/button';
 import DropDownBox from 'devextreme-react/drop-down-box';
+import { Switch } from 'devextreme-react';
 
 const columns = ['Nombre', 'Correo', 'Telefono', 'Role', 'Estado'];
 
@@ -21,7 +22,7 @@ export const customers = [
     Apellido: 'Ruiz',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 1,
     Estado: 2,
   },
   {
@@ -30,7 +31,7 @@ export const customers = [
     Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 2,
     Estado: 1,
   },
   {
@@ -39,7 +40,7 @@ export const customers = [
     Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 2,
     Estado: 2,
   },
   {
@@ -48,7 +49,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 1,
     Estado: 2,
   },
   {
@@ -57,7 +58,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 2,
     Estado: 2,
   },
   {
@@ -66,7 +67,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 1,
     Estado: 2,
   },
   {
@@ -75,7 +76,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 2,
     Estado: 2,
   },
   {
@@ -84,7 +85,7 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 1,
     Estado: 2,
   },
   {
@@ -93,9 +94,14 @@ export const customers = [
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
-    Role: 'Administrador',
+    Role: 2,
     Estado: 2,
   },
+];
+
+const roles = [
+  { ID: 1, Name: 'Administradores' },
+  { ID: 2, Name: 'Traders' },
 ];
 
 const states = [
@@ -118,6 +124,22 @@ const CustomEditCell = (props) => {
   );
 };
 
+const customizeEditingToolbar = (toolbarOptions) => {
+  toolbarOptions.items.unshift({
+    widget: 'dxButton',
+    location: 'before',
+    options: {
+      text: 'Opción personalizada',
+      onClick: () => handleCustomOptionClick(),
+    },
+  });
+};
+
+const handleCustomOptionClick = () => {
+  // Lógica para manejar el clic en la opción personalizada
+  console.log('Opción personalizada');
+};
+
 function logEvent(events, eventName) {
   return [eventName, ...events];
 }
@@ -133,6 +155,11 @@ export default function UsuariosPage() {
 
   const handleEvent = (eventName) => {
     setEvents((prevEvents) => logEvent(prevEvents, eventName));
+  };
+
+  const handleChangePassword = (e) => {
+    // Lógica para cambiar la contraseña del usuario
+    console.log('Cambiar contraseña del usuario con ID:', e.data.id);
   };
 
   return (
@@ -174,11 +201,24 @@ export default function UsuariosPage() {
 
         <Column dataField="Telefono" />
 
-        <Column dataField="Role" />
-
-        <Column dataField="Estado" caption="Estado" width={125}>
-          <Lookup dataSource={states} displayExpr="Name" valueExpr="ID" />
+        <Column dataField="Role" caption="Role" width={125}>
+          <Lookup dataSource={roles} displayExpr="Name" valueExpr="ID" />
         </Column>
+
+        <Column
+          dataField="Estado"
+          caption="Estado"
+          width={125}
+          dataType="boolean"
+          editorOptions={{ switchedOnText: 'Yes', switchedOffText: 'No' }}
+          editorRender={({ value, setValue }) => (
+            <Switch
+              value={value}
+              onValueChanged={(e) => setValue(e.value)}
+              onOptionChanged={onSwitchValueChanged}
+            />
+          )}
+        ></Column>
 
         <Editing
           mode="popup"
@@ -186,6 +226,7 @@ export default function UsuariosPage() {
           allowDeleting={true}
           allowAdding={true}
           editCellComponent={CustomEditCell}
+          customizeToolbar={customizeEditingToolbar}
         ></Editing>
 
         {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
