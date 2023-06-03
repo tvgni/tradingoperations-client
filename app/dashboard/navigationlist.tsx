@@ -4,6 +4,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { menu } from './menus';
 import List from 'devextreme-react/list';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const menuRender = (data: any) => {
   return (
@@ -27,11 +28,16 @@ const menuRender = (data: any) => {
 
 export default function NavigationList() {
   const { user, isLoading } = useUser();
+  const pathname = usePathname();
 
   let defaultMenu: any[] | undefined;
   if (!isLoading) {
     defaultMenu = menu.find((menuList) => menuList.rol === user!['role'])?.menu;
   }
+  defaultMenu = defaultMenu?.map((menu) => ({
+    ...menu,
+    active: menu.path === pathname ? 'active' : '',
+  }));
 
   return (
     <div className="list" style={{ width: '200px' }}>

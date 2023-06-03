@@ -1,5 +1,5 @@
 export const menuTrader = [
-  { id: 1, text: 'Dashboard', icon: 'chart', path: '/dashboard', active: true },
+  { id: 1, text: 'Dashboard', icon: 'chart', path: '/dashboard' },
   { id: 2, text: 'Importar Trades', icon: 'product', path: '/dashboard' },
 ];
 
@@ -9,7 +9,6 @@ export const menuAdmin = [
     text: 'Dashboard',
     icon: 'product',
     path: '/dashboard',
-    active: true,
   },
   { id: 2, text: 'Usuarios', icon: 'card', path: '/dashboard/usuarios' },
 ];
