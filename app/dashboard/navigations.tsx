@@ -41,6 +41,10 @@ const MenuLeft = ({
       text: 'Academia Trading Como Negocio',
     },
     {
+      location: 'before',
+      html: '<img src="/favicon-32x32.png"/>',
+    },
+    {
       location: 'after',
       widget: dxDropDownButton,
       options: {
