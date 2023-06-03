@@ -4,9 +4,9 @@ import Drawer from 'devextreme-react/drawer';
 import Toolbar from 'devextreme-react/toolbar';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
 import NavigationList from './navigationlist';
-
 import { useRouter } from 'next/navigation';
 import { authUser } from '@/models/auth0.model';
+import { Button } from 'devextreme-react/button';
 
 const MenuLeft = ({
   session,
@@ -16,9 +16,9 @@ const MenuLeft = ({
   children: any;
 }) => {
   const [opened, setOpened] = useState(true);
-  const [openedStateMode, setOpenedStateMode] = useState('shrink');
-  const [revealMode, setRevealMode] = useState('slide');
-  const [position, setPosition] = useState('left');
+  const [openedStateMode] = useState('shrink');
+  const [revealMode] = useState('slide');
+  const [position] = useState('left');
 
   const router = useRouter();
 
@@ -38,7 +38,7 @@ const MenuLeft = ({
     {
       location: 'before',
       showText: true,
-      text: 'Trading Como Negocio',
+      text: 'Academia Trading Como Negocio',
     },
     {
       location: 'after',
@@ -64,15 +64,10 @@ const MenuLeft = ({
     },
   ];
 
-  const onOutsideClick = () => {
-    setOpened(false);
-  };
-
   return (
     <React.Fragment>
-      <Toolbar style={{ background: '#f2f2f2' }} items={toolbarItems}></Toolbar>
+      <Toolbar items={toolbarItems}></Toolbar>
       <Drawer
-        className=""
         opened={opened}
         openedStateMode={openedStateMode}
         position={position}

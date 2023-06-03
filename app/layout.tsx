@@ -1,5 +1,5 @@
+import './theme/dx.material.traderacademic.css';
 import './globals.css';
-import 'devextreme/dist/css/dx.material.blue.light.css';
 import React from 'react';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
@@ -15,6 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <link rel="icon" href="/favicon-32x32.png" sizes="any" />
       <UserProvider>
         <body className={'dx-viewport'}>{children}</body>
       </UserProvider>

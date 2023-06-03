@@ -1,43 +1,49 @@
 'use client';
 import React from 'react';
-
-import { menuAdmin } from './menus';
-
-import List, { Item } from 'devextreme-react/list';
-
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { menu } from './menus';
+import List from 'devextreme-react/list';
 import Link from 'next/link';
 
-const ListItem = (data) => {
+const menuRender = (data: any) => {
   return (
-    <Link style={{ textDecoration: 'none' }} href={data.path}>
-      {' '}
-      <i className={`dx-icon dx-icon-${data.icon} dx-list-item-icon`}></i>{' '}
-      {data.text}
+    <Link
+      className={`menu-item${data.active ? ' active' : ''}`}
+      href={data.path}
+    >
+      <div className="flex flex-row">
+        <div className="basis-1/4">
+          <i
+            className={`dx-icon dx-icon-${data.icon} dx-list-item-icon icon-item`}
+          ></i>
+        </div>
+        <div className="basis-3/4" style={{ marginTop: '5px' }}>
+          <span>{data.text}</span>
+        </div>
+      </div>
     </Link>
   );
 };
 
-class NavigationList extends React.PureComponent {
-  render() {
-    return (
-      <div className="list" style={{ width: '200px' }}>
-        <List
-          dataSource={menuAdmin}
-          hoverStateEnabled={false}
-          activeStateEnabled={false}
-          focusStateEnabled={false}
-          className=""
-          height="100vh"
-          style={{ background: '#C1C1C1' }}
-          itemRender={ListItem}
-        >
-          {/*<Item render={renderCustomItemDashboard} icon={'product'}></Item>
-          <Item render={renderCustomItemUsuarios} icon={'product'}></Item>
-          <Item render={renderCustomItemInformes} icon={'product'}></Item>*/}
-        </List>
-      </div>
-    );
-  }
-}
+export default function NavigationList() {
+  const { user, isLoading } = useUser();
 
-export default NavigationList;
+  let defaultMenu: any[] | undefined;
+  if (!isLoading) {
+    defaultMenu = menu.find((menuList) => menuList.rol === user!['role'])?.menu;
+  }
+
+  return (
+    <div className="list" style={{ width: '200px' }}>
+      <List
+        dataSource={defaultMenu}
+        hoverStateEnabled={false}
+        activeStateEnabled={false}
+        focusStateEnabled={false}
+        className=""
+        height="100vh"
+        itemRender={menuRender}
+      ></List>
+    </div>
+  );
+}
