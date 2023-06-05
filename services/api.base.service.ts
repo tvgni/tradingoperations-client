@@ -41,13 +41,13 @@ const ApiService = {
   get: <TResponse>(path: string, queryParams = {}) =>
     request<TResponse>('GET', path, { queryParams }),
 
-  post: <TResponse>(path: string, body: any, queryParams = {}) =>
+  post: <TResponse>(path: string, body: any = {}, queryParams = {}) =>
     request<TResponse>('POST', path, { body, queryParams }),
 
-  put: <TResponse>(path: string, body: any, queryParams = {}) =>
+  put: <TResponse>(path: string, body: any = {}, queryParams = {}) =>
     request<TResponse>('PUT', path, { body, queryParams }),
 
-  delete: <TResponse>(path: string, body: any, queryParams = {}) =>
+  delete: <TResponse>(path: string, body: any = {}, queryParams = {}) =>
     request<TResponse>('DELETE', path, { body, queryParams }),
 };
 

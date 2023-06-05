@@ -13,7 +13,7 @@ const UsersService = {
   },
 
   createUser: async (id: number): Promise<UserModel[]> => {
-    const users = await ApiService.post<UserModel[]>('/users', { id });
+    const users = await ApiService.post<UserModel[]>('/users');
     return users;
   },
 };
