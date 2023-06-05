@@ -26,14 +26,14 @@ async function request<TResponse>(
   // Request to the api
   const apiUrl = `${
     process.env.AUTH0_API_AUDIENCE_URL ?? ''
-  }/${path}+${queryParams}`;
+  }v1${path}+${queryParams}`;
 
   const response = await fetch(apiUrl, {
     method,
     headers,
     body: data?.body,
   });
-
+  // todo: Validar errores de servidor
   return await response.json();
 }
 
