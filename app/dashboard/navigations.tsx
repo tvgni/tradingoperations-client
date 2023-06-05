@@ -1,12 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Drawer from 'devextreme-react/drawer';
 import Toolbar from 'devextreme-react/toolbar';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
 import NavigationList from './navigationlist';
 import { useRouter } from 'next/navigation';
 import { authUser } from '@/models/auth0.model';
-import { Button } from 'devextreme-react/button';
+import FullScreenLoading from '@/components/loading';
 
 const MenuLeft = ({
   session,
