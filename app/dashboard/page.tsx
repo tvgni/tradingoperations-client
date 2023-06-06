@@ -1,4 +1,5 @@
 export default function dashboarpage() {
+  throw new Error('Este componente se daño');
   return (
     <div className="pagecontainer">
       <h4 className="page-title">Dashboard Page!</h4>

@@ -25,3 +25,8 @@ img.dx-icon {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+
+.dx-popup-title.dx-toolbar {
+  background: #fa5558;
+  color: white;
+}
