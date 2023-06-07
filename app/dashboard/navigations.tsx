@@ -16,9 +16,6 @@ const MenuLeft = ({
   children: any;
 }) => {
   const [opened, setOpened] = useState(true);
-  const [openedStateMode] = useState('shrink');
-  const [revealMode] = useState('slide');
-  const [position] = useState('left');
 
   const router = useRouter();
 
@@ -73,9 +70,9 @@ const MenuLeft = ({
       <Toolbar items={toolbarItems}></Toolbar>
       <Drawer
         opened={opened}
-        openedStateMode={openedStateMode}
-        position={position}
-        revealMode={revealMode}
+        openedStateMode="shrink"
+        position="left"
+        revealMode="slide"
         component={NavigationList}
       >
         <div id="content" className="dx-theme-background-color">
