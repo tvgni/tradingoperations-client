@@ -67,7 +67,7 @@ const MenuLeft = ({
 
   return (
     <React.Fragment>
-      <Toolbar items={toolbarItems}></Toolbar>
+      <Toolbar className="base-toolbar" items={toolbarItems}></Toolbar>
       <Drawer
         opened={opened}
         openedStateMode="shrink"
