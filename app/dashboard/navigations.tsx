@@ -1,5 +1,5 @@
 'use client';
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import Drawer from 'devextreme-react/drawer';
 import Toolbar from 'devextreme-react/toolbar';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
@@ -20,7 +20,7 @@ const MenuLeft = ({
   const router = useRouter();
 
   const handleLinkClick = () => {
-    router.push('/dashboard/profile');
+    router.push('/profile');
   };
 
   const toolbarItems = [

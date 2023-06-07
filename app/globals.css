@@ -19,6 +19,76 @@ img.dx-icon {
   margin-bottom: 2px;
 }
 
+.dx-toolbar.base-toolbar {
+  background-color: rgba(191, 191, 191, 0.15);
+  padding: 5px 10px;
+}
+.dx-drawer-panel-content {
+  background-color: #585858;
+}
+
+.dx-list-item-icon-container,
+.dx-toolbar-before {
+  width: 36px;
+  padding-right: 0 !important;
+  text-align: center;
+}
+
+.dx-list-item-content {
+  padding-left: 10px !important;
+}
+
+.dx-button {
+  background-color: rgba(191, 191, 191, -0.15);
+  border: none;
+}
+
+.panel-list {
+  height: 400px;
+}
+
+.dx-drawer-expand.dx-drawer-right .panel-list {
+  float: right;
+}
+
+.panel-list .dx-list-item {
+  color: #fff;
+  border-top: 1px solid rgba(221, 221, 221, 0.2);
+}
+
+#content {
+  height: 93vh;
+}
+.scrollContent {
+  padding: 10px 40px;
+}
+
+.menu-item {
+  text-decoration: none;
+}
+
+.dx-theme-material-typography a {
+  color: white;
+}
+
+.menu-item .icon-item {
+  color: white;
+}
+
+.dx-theme-material-typography .menu-item.active {
+  color: #ffa000 !important;
+}
+
+.menu-item.active .icon-item {
+  color: #ffa000 !important;
+}
+
+.page-title {
+  border-bottom: 1px solid #ffa000;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
 .img-form-profile {
   margin: 0 150px;
 }
