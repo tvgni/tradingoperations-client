@@ -1,4 +1,5 @@
 'use client';
+import './login.css';
 import { useRouter } from 'next/navigation';
 
 export default async function HomePage() {

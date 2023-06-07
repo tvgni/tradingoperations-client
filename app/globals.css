@@ -5,7 +5,6 @@ body {
   margin: 0;
   overflow: hidden;
   min-height: 125vh;
-  white-space: nowrap;
 }
 
 .dx-dropdownbutton {
@@ -23,10 +22,6 @@ img.dx-icon {
 .dx-popup-title.dx-toolbar {
   background: #fa5558;
   color: white;
-}
-
-p {
-  text-wrap: wrap;
 }
 
 .dx-scrollable-scroll-content {
