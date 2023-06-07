@@ -19,6 +19,17 @@ img.dx-icon {
   margin-bottom: 2px;
 }
 
+.img-form-profile {
+  margin: 0 150px;
+}
+
+.first-grid-form {
+  margin: 20px 0 80px 0;
+}
+
+.margen-top {
+  margin-top: 20px;
+}
 .dx-popup-title.dx-toolbar {
   background: #fa5558;
   color: white;

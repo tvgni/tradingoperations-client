@@ -5,6 +5,8 @@
       "/dashboard",
       "/dashboard/usuarios",
       "/dashboard/profile",
+      "/dashboard/trades",
+      "/dashboard/informes",
       "/dashboard/usuarios2"
     ]
   },
