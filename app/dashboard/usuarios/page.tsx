@@ -66,7 +66,7 @@ export const customers = [
 
 export default function UsuariosPage() {
   return (
-    <div className={'pagecontainer'}>
+    <div>
       <h4 className="page-title">Usuarios Page!</h4>
 
       <DataGrid

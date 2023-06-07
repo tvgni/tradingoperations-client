@@ -6,7 +6,7 @@ import dxDropDownButton from 'devextreme/ui/drop_down_button';
 import NavigationList from './navigationlist';
 import { useRouter } from 'next/navigation';
 import { authUser } from '@/models/auth0.model';
-import FullScreenLoading from '@/components/loading';
+import { ScrollView } from 'devextreme-react';
 
 const MenuLeft = ({
   session,
@@ -79,7 +79,14 @@ const MenuLeft = ({
         component={NavigationList}
       >
         <div id="content" className="dx-theme-background-color">
-          {children}
+          <ScrollView
+            scrollByContent={true}
+            scrollByThumb={true}
+            useNative={false}
+            direction="vertical"
+          >
+            <div className="scrollContent">{children}</div>
+          </ScrollView>
         </div>
       </Drawer>
     </React.Fragment>

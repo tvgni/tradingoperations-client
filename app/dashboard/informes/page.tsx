@@ -1,6 +1,6 @@
 export default function InformesPage() {
   return (
-    <div className="pagecontainer">
+    <div>
       <h4 className="page-title">Informes Page!</h4>
       <p>
         is simply dummy text of the printing and typesetting industry. Lorem

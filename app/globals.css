@@ -8,12 +8,6 @@ body {
   white-space: nowrap;
 }
 
-.pagecontainer {
-  padding: 0 20px !important;
-  height: 1200px !important;
-  overflow: auto !important;
-}
-
 .dx-dropdownbutton {
   margin-right: 20px;
 }
@@ -29,4 +23,12 @@ img.dx-icon {
 .dx-popup-title.dx-toolbar {
   background: #fa5558;
   color: white;
+}
+
+p {
+  text-wrap: wrap;
+}
+
+.dx-scrollable-scroll-content {
+  background-color: #ffa000;
 }

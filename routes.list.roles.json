@@ -4,7 +4,8 @@
     "routes": [
       "/dashboard",
       "/dashboard/usuarios",
-      "/dashboard/profile"
+      "/dashboard/profile",
+      "/dashboard/usuarios2"
     ]
   },
   {

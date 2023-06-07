@@ -36,8 +36,10 @@
 }
 
 #content {
-  height: 100%;
-  padding: 10px 20px;
+  height: 93vh;
+}
+.scrollContent {
+  padding: 10px 40px;
 }
 
 .menu-item {
