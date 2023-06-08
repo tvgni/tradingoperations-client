@@ -1,7 +1,8 @@
 'use client';
+import './login.css';
 import { useRouter } from 'next/navigation';
 
-export default function HomePage() {
+export default async function HomePage() {
   const router = useRouter();
 
   const handleLoginClick = () => {

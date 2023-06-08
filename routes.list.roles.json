@@ -1,0 +1,20 @@
+[
+  {
+    "role": "Admin",
+    "routes": [
+      "/dashboard",
+      "/dashboard/usuarios",
+      "/dashboard/profile",
+      "/dashboard/trades",
+      "/dashboard/informes",
+      "/dashboard/usuarios2"
+    ]
+  },
+  {
+    "role": "Trader",
+    "routes": [
+      "/dashboard",
+      "/dashboard/profile"
+    ]
+  }
+]

@@ -1,7 +1,7 @@
 export default function dashboarpage() {
   return (
-    <div className="pagecontainer">
-      <h4 style={{ borderBottom: '1px solid red' }}>Dashboard Page!</h4>
+    <div>
+      <h4 className="page-title">Dashboard Page!</h4>
 
       <p>
         is simply dummy text of the printing and typesetting industry. Lorem

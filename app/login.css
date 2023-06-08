@@ -1,0 +1,19 @@
+@tailwind base;
+
+.dx-theme-material-typography h2 {
+  font-weight: 300;
+  font-size: 45px;
+  letter-spacing: -0.5px;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  background-color: #ffa000;
+}
+
+.bg-gray-900 {
+  background-color: #252525;
+  border-radius: 15px;
+}

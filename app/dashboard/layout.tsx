@@ -1,3 +1,4 @@
+import './style.css';
 import { user } from '@/utils/auth0.page';
 import MenuLeft from './navigations';
 

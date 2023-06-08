@@ -1,13 +1,8 @@
 'use client';
-import '../../globals.css';
-
 import React, { useState } from 'react';
 import { DropDownButton, FileUploader, DataGrid } from 'devextreme-react';
 import { Column, Paging, Pager } from 'devextreme-react/data-grid';
 import { Button } from 'devextreme-react/button';
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.css';
-import { Width } from 'devextreme-react/chart';
 
 const MyPage = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -98,7 +93,7 @@ const MyPage = () => {
   ];
   const allowedPageSizes = [2, 4, 8];
   return (
-    <div className="pagecontainer overflow-y-auto">
+    <div>
       <div className="h-56 grid grid-cols-3 gap-3  items-start">
         <div className="py-4">
           <DropDownButton
