@@ -6,12 +6,14 @@ import DataGrid, {
   Pager,
   Editing,
   Lookup,
-  FilterRow,
+  Popup,
+  Form,
+  Item,
+  SearchPanel,
+  Scrolling,
 } from 'devextreme-react/data-grid';
 import DropDownBox from 'devextreme-react/drop-down-box';
 import { Switch } from 'devextreme-react';
-
-const columns = ['Nombre', 'Correo', 'Telefono', 'Role', 'Estado'];
 
 export const customers = [
   {
@@ -21,7 +23,7 @@ export const customers = [
     Correo: 'Ark@gmail.com',
     Telefono: '8288-9899',
     Role: 1,
-    Estado: 2,
+    Estado: 1,
   },
   {
     ID: 2,
@@ -33,7 +35,7 @@ export const customers = [
     Estado: 1,
   },
   {
-    ID: 2,
+    ID: 3,
     Nombre: 'Adrian',
     Apellido: 'Estrada',
     Correo: 'Ark@gmail.com',
@@ -42,7 +44,7 @@ export const customers = [
     Estado: 2,
   },
   {
-    ID: 2,
+    ID: 4,
     Nombre: 'Alfred',
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
@@ -51,7 +53,7 @@ export const customers = [
     Estado: 2,
   },
   {
-    ID: 2,
+    ID: 5,
     Nombre: 'Alfred',
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
@@ -60,7 +62,7 @@ export const customers = [
     Estado: 2,
   },
   {
-    ID: 2,
+    ID: 6,
     Nombre: 'Alfred',
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
@@ -69,7 +71,7 @@ export const customers = [
     Estado: 2,
   },
   {
-    ID: 2,
+    ID: 7,
     Nombre: 'Alfred',
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
@@ -78,7 +80,7 @@ export const customers = [
     Estado: 2,
   },
   {
-    ID: 2,
+    ID: 8,
     Nombre: 'Alfred',
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
@@ -87,7 +89,61 @@ export const customers = [
     Estado: 2,
   },
   {
-    ID: 2,
+    ID: 9,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 10,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 11,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 12,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 13,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 14,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 15,
     Nombre: 'Alfred',
     Apellido: 'Canceco',
     Correo: 'Ark@gmail.com',
@@ -108,7 +164,7 @@ const states = [
   // Agrega más objetos de estado según sea necesario
 ];
 
-const CustomEditCell = (props) => {
+const CustomEditCell = (props: any) => {
   const { value, onValueChange } = props;
 
   return (
@@ -122,7 +178,7 @@ const CustomEditCell = (props) => {
   );
 };
 
-const customizeEditingToolbar = (toolbarOptions) => {
+const customizeEditingToolbar = (toolbarOptions: any) => {
   toolbarOptions.items.unshift({
     widget: 'dxButton',
     location: 'before',
@@ -142,7 +198,7 @@ function logEvent(events, eventName) {
   return [eventName, ...events];
 }
 
-const allowedPageSizes = [2, 4, 8];
+const allowedPageSizes = [10, 50, 100];
 
 export default function UsuariosPage() {
   const [events, setEvents] = useState([]);
@@ -159,12 +215,12 @@ export default function UsuariosPage() {
     // Lógica para cambiar la contraseña del usuario
     console.log('Cambiar contraseña del usuario con ID:', e.data.id);
   };
-
   return (
     <div>
-      <h4 className="page-title">Usuarios Page!</h4>
+      <h4 className="page-title">Administracion de Cuentas</h4>
 
       <DataGrid
+        height={'71vh'}
         dataSource={customers}
         keyExpr="ID"
         //defaultColumns={columns}
@@ -182,38 +238,34 @@ export default function UsuariosPage() {
         onEditCanceling={() => handleEvent('EditCanceling')}
         onEditCanceled={() => handleEvent('EditCanceled')}
       >
-        {/*<Column
-            dataField="Estado"
-            caption="State"
-            width={125}
-            editCellComponent={CustomEditCell}
-          />*/}
-
-        <FilterRow visible={true} />
+        <SearchPanel width={300} visible={true} />
+        <Paging defaultPageSize={10} />
+        <Pager
+          visible={true}
+          allowedPageSizes={allowedPageSizes}
+          displayMode="full"
+          showPageSizeSelector={true}
+          showInfo={true}
+          showNavigationButtons={true}
+        />
+        <Scrolling mode="virtual" />
 
         <Column dataField="Nombre" />
-
         <Column dataField="Apellido" />
-
         <Column dataField="Correo" />
-
-        <Column dataField="Telefono" />
-
-        <Column dataField="Role" caption="Role" width={125}>
+        <Column dataField="Telefono" width={100} />
+        <Column dataField="Role" caption="Role" width={135}>
           <Lookup dataSource={roles} displayExpr="Name" valueExpr="ID" />
         </Column>
-
         <Column
           dataField="Estado"
-          caption="Estado"
           width={125}
-          dataType="boolean"
-          editorOptions={{ switchedOnText: 'Yes', switchedOffText: 'No' }}
-          editorRender={({ value, setValue }) => (
+          dataType="number"
+          cellRender={({ value }) => (value === 1 ? 'Activo' : 'Deshabilitado')}
+          editCellRender={({ value, setValue }) => (
             <Switch
-              value={value}
-              onValueChanged={(e) => setValue(e.value)}
-              onOptionChanged={onSwitchValueChanged}
+              defaultValue={value === 1}
+              onValueChange={(value) => setValue(value ? 1 : 2)}
             />
           )}
         ></Column>
@@ -225,7 +277,14 @@ export default function UsuariosPage() {
           allowAdding={true}
           editCellComponent={CustomEditCell}
           customizeToolbar={customizeEditingToolbar}
-        ></Editing>
+        >
+          <Popup
+            title="Editar Cuenta"
+            showTitle={true}
+            width={700}
+            height={525}
+          />
+        </Editing>
 
         {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
                   <DropDownButton
@@ -248,12 +307,6 @@ export default function UsuariosPage() {
                 ]}
               />
             )} />*/}
-
-        <Paging defaultPageSize={4} />
-        <Pager
-          showPageSizeSelector={true}
-          allowedPageSizes={allowedPageSizes}
-        />
       </DataGrid>
     </div>
   );

@@ -25,6 +25,7 @@ export default async function RootLayout({
           ) : (
             children
           )}
+          <div id="containerElement"></div>
         </body>
       </UserProvider>
     </html>

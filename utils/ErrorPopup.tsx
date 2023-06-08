@@ -14,6 +14,7 @@ export default function ErrorPopup({
 
   return (
     <Popup
+      className="app-error"
       visible={true}
       // onHiding={popupState}
       dragEnabled={false}
@@ -21,7 +22,8 @@ export default function ErrorPopup({
       showCloseButton={false}
       showTitle={true}
       title={error.name}
-      container=".dx-viewport"
+      // container=".dx-viewport"
+      container="#containerElement"
       width={300}
       height={280}
     >
