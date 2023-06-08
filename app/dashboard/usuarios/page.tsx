@@ -1,70 +1,167 @@
 'use client';
-import '../../globals.css';
+import { useState } from 'react';
 import { AutoLayout } from 'devextreme-react/diagram';
-import DataGrid from 'devextreme-react/data-grid';
+import DataGrid, {
+  Column,
+  Paging,
+  Pager,
+  Editing,
+  Lookup,
+  FilterRow,
+} from 'devextreme-react/data-grid';
+import Button, { DropDownButton } from 'devextreme-react/button';
+import DropDownBox from 'devextreme-react/drop-down-box';
+import { Switch } from 'devextreme-react';
 
-const columns = [
-  'CompanyName',
-  'City',
-  'State',
-  'Phone',
-  'Fax',
-  'Website',
-  'acciones',
-];
+const columns = ['Nombre', 'Correo', 'Telefono', 'Role', 'Estado'];
 
 export const customers = [
   {
     ID: 1,
-    CompanyName: 'Super Mart of the West',
-    Address: '702 SW 8th Street',
-    City: 'Bentonville',
-    State: 'Arkansas',
-    Zipcode: 72716,
-    Phone: '(800) 555-2797',
-    Fax: '(800) 555-2171',
-    Website: 'http://www.nowebsitesupermart.com',
-    acciones: '',
+    Nombre: 'Anika',
+    Apellido: 'Ruiz',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 1,
+    Estado: 2,
   },
   {
     ID: 2,
-    CompanyName: 'Electronics Depot',
-    Address: '2455 Paces Ferry Road NW',
-    City: 'Atlanta',
-    State: 'Georgia',
-    Zipcode: 30339,
-    Phone: '(800) 595-3232',
-    Fax: '(800) 595-3231',
-    Website: 'http://www.nowebsitedepot.com',
-    acciones: '',
+    Nombre: 'Andrea',
+    Apellido: 'Estrada',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 1,
   },
   {
-    ID: 3,
-    CompanyName: 'K&S Music',
-    Address: '1000 Nicllet Mall',
-    City: 'Minneapolis',
-    State: 'Minnesota',
-    Zipcode: 55403,
-    Phone: '(612) 304-6073',
-    Fax: '(612) 304-6074',
-    Website: 'http://www.nowebsitemusic.com',
-    acciones: '',
+    ID: 2,
+    Nombre: 'Adrian',
+    Apellido: 'Estrada',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
   },
   {
-    ID: 4,
-    CompanyName: "Tom's Club",
-    Address: '999 Lake Drive',
-    City: 'Issaquah',
-    State: 'Washington',
-    Zipcode: 98027,
-    Phone: '(800) 955-2292',
-    Fax: '(800) 955-2293',
-    Website: 'http://www.nowebsitetomsclub.com',
-    acciones: '',
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 1,
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 1,
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 1,
+    Estado: 2,
+  },
+  {
+    ID: 2,
+    Nombre: 'Alfred',
+    Apellido: 'Canceco',
+    Correo: 'Ark@gmail.com',
+    Telefono: '8288-9899',
+    Role: 2,
+    Estado: 2,
   },
 ];
 
+const roles = [
+  { ID: 1, Name: 'Administradores' },
+  { ID: 2, Name: 'Traders' },
+];
+
+const states = [
+  { ID: 1, Name: 'Activo' },
+  { ID: 2, Name: 'Inactivo' },
+  // Agrega más objetos de estado según sea necesario
+];
+
+const CustomEditCell = (props) => {
+  const { value, onValueChange } = props;
+
+  return (
+    <DropDownBox
+      value={value}
+      dataSource={states}
+      displayExpr="Name"
+      valueExpr="ID"
+      onValueChanged={onValueChange}
+    />
+  );
+};
+
+const customizeEditingToolbar = (toolbarOptions) => {
+  toolbarOptions.items.unshift({
+    widget: 'dxButton',
+    location: 'before',
+    options: {
+      text: 'Opción personalizada',
+      onClick: () => handleCustomOptionClick(),
+    },
+  });
+};
+
+const handleCustomOptionClick = () => {
+  // Lógica para manejar el clic en la opción personalizada
+  console.log('Opción personalizada');
+};
+
+function logEvent(events, eventName) {
+  return [eventName, ...events];
+}
+
+const allowedPageSizes = [2, 4, 8];
+
 export default function UsuariosPage() {
+  const [events, setEvents] = useState([]);
+
+  const clearEvents = () => {
+    setEvents([]);
+  };
+
+  const handleEvent = (eventName) => {
+    setEvents((prevEvents) => logEvent(prevEvents, eventName));
+  };
+
+  const handleChangePassword = (e) => {
+    // Lógica para cambiar la contraseña del usuario
+    console.log('Cambiar contraseña del usuario con ID:', e.data.id);
+  };
+
   return (
     <div className={'pagecontainer'}>
       <h4 style={{ borderBottom: '1px solid red' }}>Usuarios Page!</h4>
@@ -72,9 +169,94 @@ export default function UsuariosPage() {
       <DataGrid
         dataSource={customers}
         keyExpr="ID"
-        defaultColumns={columns}
+        //defaultColumns={columns}
         showBorders={true}
-      />
+        onEditingStart={() => handleEvent('EditingStart')}
+        onInitNewRow={() => handleEvent('InitNewRow')}
+        onRowInserting={() => handleEvent('RowInserting')}
+        onRowInserted={() => handleEvent('RowInserted')}
+        onRowUpdating={() => handleEvent('RowUpdating')}
+        onRowUpdated={() => handleEvent('RowUpdated')}
+        onRowRemoving={() => handleEvent('RowRemoving')}
+        onRowRemoved={() => handleEvent('RowRemoved')}
+        onSaving={() => handleEvent('Saving')}
+        onSaved={() => handleEvent('Saved')}
+        onEditCanceling={() => handleEvent('EditCanceling')}
+        onEditCanceled={() => handleEvent('EditCanceled')}
+      >
+        {/*<Column
+            dataField="Estado"
+            caption="State"
+            width={125}
+            editCellComponent={CustomEditCell}
+          />*/}
+
+        <FilterRow visible={true} />
+
+        <Column dataField="Nombre" />
+
+        <Column dataField="Apellido" />
+
+        <Column dataField="Correo" />
+
+        <Column dataField="Telefono" />
+
+        <Column dataField="Role" caption="Role" width={125}>
+          <Lookup dataSource={roles} displayExpr="Name" valueExpr="ID" />
+        </Column>
+
+        <Column
+          dataField="Estado"
+          caption="Estado"
+          width={125}
+          dataType="boolean"
+          editorOptions={{ switchedOnText: 'Yes', switchedOffText: 'No' }}
+          editorRender={({ value, setValue }) => (
+            <Switch
+              value={value}
+              onValueChanged={(e) => setValue(e.value)}
+              onOptionChanged={onSwitchValueChanged}
+            />
+          )}
+        ></Column>
+
+        <Editing
+          mode="popup"
+          allowUpdating={true}
+          allowDeleting={true}
+          allowAdding={true}
+          editCellComponent={CustomEditCell}
+          customizeToolbar={customizeEditingToolbar}
+        ></Editing>
+
+        {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
+                  <DropDownButton
+                    text="Edit"
+                    items={[
+                      { text: 'Edit', onClick: () => popup?.option('visible', false) },
+                      { text: 'Delete', onClick: () => popup?.option('visible', false) },
+                    ]}
+                  />
+                )} />
+
+                  </Editing>*/}
+
+        {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
+              <DropDownButton
+                text="Edit"
+                items={[
+                  { text: 'Edit', onClick: () => popup?.option('visible', false) },
+                  { text: 'Delete', onClick: () => popup?.option('visible', false) },
+                ]}
+              />
+            )} />*/}
+
+        <Paging defaultPageSize={4} />
+        <Pager
+          showPageSizeSelector={true}
+          allowedPageSizes={allowedPageSizes}
+        />
+      </DataGrid>
     </div>
   );
 }
