@@ -3,18 +3,16 @@
     "role": "Admin",
     "routes": [
       "/dashboard",
-      "/dashboard/usuarios",
-      "/dashboard/profile",
-      "/dashboard/trades",
-      "/dashboard/informes",
-      "/dashboard/usuarios2"
+      "/usuarios",
+      "/profile",
+      "/trades"
     ]
   },
   {
     "role": "Trader",
     "routes": [
       "/dashboard",
-      "/dashboard/profile"
+      "/profile"
     ]
   }
 ]

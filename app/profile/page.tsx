@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Button, TextBox, CheckBox, FileUploader } from 'devextreme-react';
-import { Margin } from 'devextreme-react/bar-gauge';
+import { Button, TextBox } from 'devextreme-react';
 
 const UserProfileForm = () => {
   const [name, setName] = useState('');
