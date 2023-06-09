@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+function shuffleArray(array: any[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const skip = searchParams.get('skip');
+  const take = Number(searchParams.get('take'));
+
+  const doplicate = take / 10;
+
   const customers = [
     {
       ID: 1,
@@ -22,8 +36,8 @@ export async function GET() {
     },
     {
       ID: 3,
-      Nombre: 'Adrian',
-      Apellido: 'Estrada',
+      Nombre: 'Juan',
+      Apellido: 'Alberto',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 2,
@@ -31,7 +45,7 @@ export async function GET() {
     },
     {
       ID: 4,
-      Nombre: 'Alfred',
+      Nombre: 'Jesus',
       Apellido: 'Canceco',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
@@ -40,8 +54,8 @@ export async function GET() {
     },
     {
       ID: 5,
-      Nombre: 'Alfred',
-      Apellido: 'Canceco',
+      Nombre: 'Bismark',
+      Apellido: 'Canales',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 2,
@@ -49,8 +63,8 @@ export async function GET() {
     },
     {
       ID: 6,
-      Nombre: 'Alfred',
-      Apellido: 'Canceco',
+      Nombre: 'Josue',
+      Apellido: 'Maldonado',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 1,
@@ -58,8 +72,8 @@ export async function GET() {
     },
     {
       ID: 7,
-      Nombre: 'Alfred',
-      Apellido: 'Canceco',
+      Nombre: 'Skarlet',
+      Apellido: 'Martinez',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 2,
@@ -67,8 +81,8 @@ export async function GET() {
     },
     {
       ID: 8,
-      Nombre: 'Alfred',
-      Apellido: 'Canceco',
+      Nombre: 'Huber',
+      Apellido: 'Gonzalez',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 1,
@@ -76,8 +90,8 @@ export async function GET() {
     },
     {
       ID: 9,
-      Nombre: 'Alfred',
-      Apellido: 'Canceco',
+      Nombre: 'Henry',
+      Apellido: 'Dolores',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 2,
@@ -85,8 +99,8 @@ export async function GET() {
     },
     {
       ID: 10,
-      Nombre: 'Alfred',
-      Apellido: 'Canceco',
+      Nombre: 'Karen',
+      Apellido: 'Paredes',
       Correo: 'Ark@gmail.com',
       Telefono: '8288-9899',
       Role: 2,
@@ -94,5 +108,12 @@ export async function GET() {
     },
   ];
 
-  return NextResponse.json({ data: customers, totalCount: 100 });
+  let totalDuplicate: any[] = [];
+  for (let index = 0; index < doplicate; index++) {
+    totalDuplicate = [...totalDuplicate, ...customers];
+  }
+  return NextResponse.json({
+    data: shuffleArray(totalDuplicate),
+    totalCount: 100,
+  });
 }

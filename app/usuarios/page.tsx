@@ -8,12 +8,12 @@ import DataGrid, {
   Popup,
   SearchPanel,
   Button,
-  Scrolling,
 } from 'devextreme-react/data-grid';
 import { Switch } from 'devextreme-react';
 import WarnigPopup from '@/components/warningPopup';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { confirm } from 'devextreme/ui/dialog';
 
 const roles = [
   { ID: 1, Name: 'Administrador' },
@@ -40,44 +40,38 @@ export default function UsuariosPage() {
 
   const [passowodPopup, setPassowodPopup] = useState(false);
   useEffect(() => setPassowodPopup(true), []);
-  const [sendChangePasswordPopupVisible, setSendChangePasswordPopupVisible] =
-    useState(false);
-  const [itemSelected, setItemSelected] = useState(null);
-  const [createEditTitlePopup, setCreateEditTitlePopup] = useState('');
+  const [visible, setVisible] = useState(false);
 
+  const [itemSelected, setItemSelected] = useState(null);
+  const hidden = useRef(false);
   const handleRequestPassword = (e: any) => {
-    setSendChangePasswordPopupVisible(true);
     const itemSelected = { ...e.row.data };
-    setItemSelected(itemSelected);
+
+    // setItemSelected(itemSelected);
     console.log(itemSelected);
   };
   const handleEvent = (value: any, eventName: string) => {
-    setCreateEditTitlePopup('');
-    if (eventName === 'EditingStart') {
-      setCreateEditTitlePopup('Editar Usuario');
-    }
-    if (eventName === 'InitNewRow') {
-      setCreateEditTitlePopup('Nuevo Usuario');
-    }
     console.log(eventName);
     console.log(value);
   };
 
+  const handleRequestPassword2 = useCallback((e: any) => {
+    const itemSelected = { ...e.row.data };
+
+    let result = confirm(
+      `<i>Seguro que desea enviar una solicitud de cambio de contraseña al correo ${itemSelected.Correo}?</i>`,
+      'Contraseña'
+    );
+    result.then((dialogResult) => {
+      if (dialogResult) {
+        console.log(itemSelected);
+      }
+    });
+  }, []);
+
   return (
     <div>
       <h4 className="page-title">Administracion de Cuentas</h4>
-      {passowodPopup ? (
-        <WarnigPopup
-          visible={sendChangePasswordPopupVisible}
-          handleCancel={() => {
-            setSendChangePasswordPopupVisible(false);
-            setItemSelected(null);
-          }}
-          handleOk={() => console.log(itemSelected)}
-        />
-      ) : (
-        <></>
-      )}
 
       <DataGrid
         height={'71vh'}
@@ -138,7 +132,7 @@ export default function UsuariosPage() {
           <Button
             hint="Cambiar contrasena"
             icon="email"
-            onClick={handleRequestPassword}
+            onClick={handleRequestPassword2}
           />
         </Column>
 
@@ -149,7 +143,7 @@ export default function UsuariosPage() {
           allowAdding={true}
         >
           <Popup
-            title={createEditTitlePopup}
+            title="Cuenta de usuario"
             showTitle={true}
             width={700}
             height={525}
