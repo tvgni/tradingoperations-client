@@ -7,149 +7,13 @@ import DataGrid, {
   Lookup,
   Popup,
   SearchPanel,
-  Scrolling,
   Button,
+  Scrolling,
 } from 'devextreme-react/data-grid';
 import { Switch } from 'devextreme-react';
 import WarnigPopup from '@/components/warningPopup';
-
-export const customers = [
-  {
-    ID: 1,
-    Nombre: 'Anika',
-    Apellido: 'Ruiz',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 1,
-  },
-  {
-    ID: 2,
-    Nombre: 'Andrea',
-    Apellido: 'Estrada',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 1,
-  },
-  {
-    ID: 3,
-    Nombre: 'Adrian',
-    Apellido: 'Estrada',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 4,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 5,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 6,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 7,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 8,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 9,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 10,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 11,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 12,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 13,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 14,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 15,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-];
+import { createStore } from 'devextreme-aspnet-data-nojquery';
+import { useEffect, useState } from 'react';
 
 const roles = [
   { ID: 1, Name: 'Administrador' },
@@ -159,25 +23,68 @@ const roles = [
 const allowedPageSizes = [10, 50, 100];
 
 export default function UsuariosPage() {
-  const handleEvent = (value: any, eventName: string) => {
-    console.log(eventName);
-    console.log(value);
-  };
+  const url = 'http://localhost:3000/v1';
+  const dataSource = createStore({
+    key: 'ID',
+    loadUrl: `${url}/users`,
+    // insertUrl: `${url}/InsertOrder`,
+    // updateUrl: `${url}/UpdateOrder`,
+    // deleteUrl: `${url}/DeleteOrder`,
+    onBeforeSend: (method, ajaxOptions) => {
+      console.log(method);
+      console.log(ajaxOptions);
+
+      ajaxOptions.xhrFields = { withCredentials: true };
+    },
+  });
+
+  const [passowodPopup, setPassowodPopup] = useState(false);
+  useEffect(() => setPassowodPopup(true), []);
+  const [sendChangePasswordPopupVisible, setSendChangePasswordPopupVisible] =
+    useState(false);
+  const [itemSelected, setItemSelected] = useState(null);
+  const [createEditTitlePopup, setCreateEditTitlePopup] = useState('');
 
   const handleRequestPassword = (e: any) => {
-    const item = { ...e.row.data };
-    console.log(item);
+    setSendChangePasswordPopupVisible(true);
+    const itemSelected = { ...e.row.data };
+    setItemSelected(itemSelected);
+    console.log(itemSelected);
+  };
+  const handleEvent = (value: any, eventName: string) => {
+    setCreateEditTitlePopup('');
+    if (eventName === 'EditingStart') {
+      setCreateEditTitlePopup('Editar Usuario');
+    }
+    if (eventName === 'InitNewRow') {
+      setCreateEditTitlePopup('Nuevo Usuario');
+    }
+    console.log(eventName);
+    console.log(value);
   };
 
   return (
     <div>
       <h4 className="page-title">Administracion de Cuentas</h4>
+      {passowodPopup ? (
+        <WarnigPopup
+          visible={sendChangePasswordPopupVisible}
+          handleCancel={() => {
+            setSendChangePasswordPopupVisible(false);
+            setItemSelected(null);
+          }}
+          handleOk={() => console.log(itemSelected)}
+        />
+      ) : (
+        <></>
+      )}
 
       <DataGrid
         height={'71vh'}
-        dataSource={customers}
+        dataSource={dataSource}
+        remoteOperations={true}
         keyExpr="ID"
-        //defaultColumns={columns}
+        columnHidingEnabled={true}
         showBorders={true}
         onEditingStart={(value) => handleEvent(value, 'EditingStart')}
         onInitNewRow={(value) => handleEvent(value, 'InitNewRow')}
@@ -192,7 +99,11 @@ export default function UsuariosPage() {
         onEditCanceling={(value) => handleEvent(value, 'EditCanceling')}
         onEditCanceled={(value) => handleEvent(value, 'EditCanceled')}
       >
-        <SearchPanel width={300} visible={true} />
+        <SearchPanel
+          width={300}
+          visible={true}
+          onTextChange={(c) => console.log(c)}
+        />
         <Paging defaultPageSize={10} />
         <Pager
           visible={true}
@@ -202,8 +113,6 @@ export default function UsuariosPage() {
           showInfo={true}
           showNavigationButtons={true}
         />
-        <Scrolling mode="virtual" />
-
         <Column dataField="Nombre" />
         <Column dataField="Apellido" />
         <Column dataField="Correo" />
@@ -240,7 +149,7 @@ export default function UsuariosPage() {
           allowAdding={true}
         >
           <Popup
-            title="Editar Cuenta"
+            title={createEditTitlePopup}
             showTitle={true}
             width={700}
             height={525}
