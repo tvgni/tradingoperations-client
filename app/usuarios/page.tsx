@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import DataGrid, {
   Column,
   Paging,
@@ -7,13 +6,12 @@ import DataGrid, {
   Editing,
   Lookup,
   Popup,
-  Form,
-  Item,
   SearchPanel,
   Scrolling,
+  Button,
 } from 'devextreme-react/data-grid';
-import DropDownBox from 'devextreme-react/drop-down-box';
 import { Switch } from 'devextreme-react';
+import WarnigPopup from '@/components/warningPopup';
 
 export const customers = [
   {
@@ -154,67 +152,23 @@ export const customers = [
 ];
 
 const roles = [
-  { ID: 1, Name: 'Administradores' },
-  { ID: 2, Name: 'Traders' },
+  { ID: 1, Name: 'Administrador' },
+  { ID: 2, Name: 'Trader' },
 ];
-
-const states = [
-  { ID: 1, Name: 'Activo' },
-  { ID: 2, Name: 'Inactivo' },
-  // Agrega más objetos de estado según sea necesario
-];
-
-const CustomEditCell = (props: any) => {
-  const { value, onValueChange } = props;
-
-  return (
-    <DropDownBox
-      value={value}
-      dataSource={states}
-      displayExpr="Name"
-      valueExpr="ID"
-      onValueChanged={onValueChange}
-    />
-  );
-};
-
-const customizeEditingToolbar = (toolbarOptions: any) => {
-  toolbarOptions.items.unshift({
-    widget: 'dxButton',
-    location: 'before',
-    options: {
-      text: 'Opción personalizada',
-      onClick: () => handleCustomOptionClick(),
-    },
-  });
-};
-
-const handleCustomOptionClick = () => {
-  // Lógica para manejar el clic en la opción personalizada
-  console.log('Opción personalizada');
-};
-
-function logEvent(events, eventName) {
-  return [eventName, ...events];
-}
 
 const allowedPageSizes = [10, 50, 100];
 
 export default function UsuariosPage() {
-  const [events, setEvents] = useState([]);
-
-  const clearEvents = () => {
-    setEvents([]);
+  const handleEvent = (value: any, eventName: string) => {
+    console.log(eventName);
+    console.log(value);
   };
 
-  const handleEvent = (eventName) => {
-    setEvents((prevEvents) => logEvent(prevEvents, eventName));
+  const handleRequestPassword = (e: any) => {
+    const item = { ...e.row.data };
+    console.log(item);
   };
 
-  const handleChangePassword = (e) => {
-    // Lógica para cambiar la contraseña del usuario
-    console.log('Cambiar contraseña del usuario con ID:', e.data.id);
-  };
   return (
     <div>
       <h4 className="page-title">Administracion de Cuentas</h4>
@@ -225,18 +179,18 @@ export default function UsuariosPage() {
         keyExpr="ID"
         //defaultColumns={columns}
         showBorders={true}
-        onEditingStart={() => handleEvent('EditingStart')}
-        onInitNewRow={() => handleEvent('InitNewRow')}
-        onRowInserting={() => handleEvent('RowInserting')}
-        onRowInserted={() => handleEvent('RowInserted')}
-        onRowUpdating={() => handleEvent('RowUpdating')}
-        onRowUpdated={() => handleEvent('RowUpdated')}
-        onRowRemoving={() => handleEvent('RowRemoving')}
-        onRowRemoved={() => handleEvent('RowRemoved')}
-        onSaving={() => handleEvent('Saving')}
-        onSaved={() => handleEvent('Saved')}
-        onEditCanceling={() => handleEvent('EditCanceling')}
-        onEditCanceled={() => handleEvent('EditCanceled')}
+        onEditingStart={(value) => handleEvent(value, 'EditingStart')}
+        onInitNewRow={(value) => handleEvent(value, 'InitNewRow')}
+        onRowInserting={(value) => handleEvent(value, 'RowInserting')}
+        onRowInserted={(value) => handleEvent(value, 'RowInserted')}
+        onRowUpdating={(value) => handleEvent(value, 'RowUpdating')}
+        onRowUpdated={(value) => handleEvent(value, 'RowUpdated')}
+        onRowRemoving={(value) => handleEvent(value, 'RowRemoving')}
+        onRowRemoved={(value) => handleEvent(value, 'RowRemoved')}
+        onSaving={(value) => handleEvent(value, 'Saving')}
+        onSaved={(value) => handleEvent(value, 'Saved')}
+        onEditCanceling={(value) => handleEvent(value, 'EditCanceling')}
+        onEditCanceled={(value) => handleEvent(value, 'EditCanceled')}
       >
         <SearchPanel width={300} visible={true} />
         <Paging defaultPageSize={10} />
@@ -269,14 +223,21 @@ export default function UsuariosPage() {
             />
           )}
         ></Column>
+        <Column type="buttons" width={110}>
+          <Button name="edit" />
+          <Button name="delete" />
+          <Button
+            hint="Cambiar contrasena"
+            icon="email"
+            onClick={handleRequestPassword}
+          />
+        </Column>
 
         <Editing
           mode="popup"
           allowUpdating={true}
           allowDeleting={true}
           allowAdding={true}
-          editCellComponent={CustomEditCell}
-          customizeToolbar={customizeEditingToolbar}
         >
           <Popup
             title="Editar Cuenta"
@@ -285,28 +246,6 @@ export default function UsuariosPage() {
             height={525}
           />
         </Editing>
-
-        {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
-                  <DropDownButton
-                    text="Edit"
-                    items={[
-                      { text: 'Edit', onClick: () => popup?.option('visible', false) },
-                      { text: 'Delete', onClick: () => popup?.option('visible', false) },
-                    ]}
-                  />
-                )} />
-
-                  </Editing>*/}
-
-        {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
-              <DropDownButton
-                text="Edit"
-                items={[
-                  { text: 'Edit', onClick: () => popup?.option('visible', false) },
-                  { text: 'Delete', onClick: () => popup?.option('visible', false) },
-                ]}
-              />
-            )} />*/}
       </DataGrid>
     </div>
   );
