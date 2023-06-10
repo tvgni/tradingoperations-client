@@ -48,7 +48,7 @@ const MenuLeft = ({
       location: 'after',
       widget: dxDropDownButton,
       options: {
-        text: session.user?.nickname,
+        text: session.user?.name ?? session.user?.nickname,
         icon: session.user?.picture,
         items: [
           {

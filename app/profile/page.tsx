@@ -5,28 +5,33 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 
 const UserProfileForm = () => {
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [telefono, setTelefono] = useState('');
+
   const [pass, setPass1] = useState('');
   const [confirmpass, setPass2] = useState('');
-  const [avatar, setAvatar] = useState(null);
 
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
+  console.log(user);
+
+  const { given_name, family_name, phone } = user as any;
+  firstName === '' && setFirstName(given_name ?? '');
+  lastname === '' && setLastName(family_name ?? '');
+  phoneNumber === '' && setPhoneNumber(phone ?? '');
   email === '' && setEmail(user?.email ?? '');
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Aquí puedes realizar la lógica para guardar los datos del perfil del usuario
-    console.log('Nombre:', name);
+    console.log('Nombre:', firstName);
     console.log('Apellido:', lastname);
-    console.log('Telefono:', telefono);
+    console.log('Telefono:', phoneNumber);
     console.log('Email:', email);
-    console.log('Avatar:', avatar);
   };
 
   const imageLoader = () => {
@@ -58,7 +63,7 @@ const UserProfileForm = () => {
           >
             <div>
               <label>Nombre:</label>
-              <TextBox value={name} />
+              <TextBox value={firstName} />
             </div>
             <div>
               <label>Apellido:</label>
@@ -66,7 +71,7 @@ const UserProfileForm = () => {
             </div>
             <div>
               <label>Telefono:</label>
-              <TextBox value={telefono} />
+              <TextBox value={phoneNumber} />
             </div>
             <div>
               <label>Email:</label>
