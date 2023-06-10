@@ -10,7 +10,6 @@ import DataGrid, {
   Button,
 } from 'devextreme-react/data-grid';
 import { Switch } from 'devextreme-react';
-import WarnigPopup from '@/components/warningPopup';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { confirm } from 'devextreme/ui/dialog';

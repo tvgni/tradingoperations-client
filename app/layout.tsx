@@ -4,8 +4,6 @@ import React from 'react';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import MenuLeft from './dashboard/navigations';
 import { user } from '@/utils/auth0.page';
-import { locale, loadMessages } from 'devextreme/localization';
-import esMessaga from 'devextreme/localization/messages/es.json';
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,8 +15,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  loadMessages(esMessaga);
-  locale('es');
   const userSession = await user();
   return (
     <html lang="en">

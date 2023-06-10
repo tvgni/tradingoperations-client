@@ -7,6 +7,8 @@ import NavigationList from './navigationlist';
 import { useRouter } from 'next/navigation';
 import { authUser } from '@/models/auth0.model';
 import { ScrollView } from 'devextreme-react';
+import { locale, loadMessages } from 'devextreme/localization';
+import * as esMessages from 'devextreme/localization/messages/es.json';
 
 const MenuLeft = ({
   session,
@@ -15,8 +17,9 @@ const MenuLeft = ({
   session: authUser;
   children: any;
 }) => {
+  loadMessages(esMessages);
+  locale('es');
   const [opened, setOpened] = useState(true);
-
   const router = useRouter();
 
   const handleLinkClick = () => {
