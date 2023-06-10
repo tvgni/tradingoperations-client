@@ -17,7 +17,8 @@ const UserProfileForm = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  setEmail(user?.email);
+  email === '' && setEmail(user?.email ?? '');
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Aquí puedes realizar la lógica para guardar los datos del perfil del usuario
@@ -69,7 +70,7 @@ const UserProfileForm = () => {
             </div>
             <div>
               <label>Email:</label>
-              <TextBox value={email ?? ''} />
+              <TextBox value={email} />
             </div>
           </div>
 
