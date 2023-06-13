@@ -8,10 +8,13 @@ import DataGrid, {
   Popup,
   SearchPanel,
   Button,
+  RequiredRule,
+  EmailRule,
+  PatternRule,
 } from 'devextreme-react/data-grid';
 import { Switch } from 'devextreme-react';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback } from 'react';
 import { confirm } from 'devextreme/ui/dialog';
 
 const roles = [
@@ -26,35 +29,26 @@ export default function UsuariosPage() {
   const dataSource = createStore({
     key: 'ID',
     loadUrl: `${url}/users`,
-    // insertUrl: `${url}/InsertOrder`,
-    // updateUrl: `${url}/UpdateOrder`,
-    // deleteUrl: `${url}/DeleteOrder`,
+    insertUrl: `${url}/users`,
+    updateUrl: `${url}/users`,
+    deleteUrl: `${url}/users`,
     onBeforeSend: (method, ajaxOptions) => {
-      console.log(method);
-      console.log(ajaxOptions);
-
-      ajaxOptions.xhrFields = { withCredentials: true };
+      if (ajaxOptions.method === 'POST') {
+        ajaxOptions.data = ajaxOptions.data.values;
+      }
+      if (ajaxOptions.method === 'PUT') {
+        ajaxOptions.data = JSON.stringify({
+          id: ajaxOptions.data.key,
+          data: ajaxOptions.data.values,
+        });
+      }
+      if (ajaxOptions.method === 'DELETE') {
+        ajaxOptions.url = `${ajaxOptions.url}?id=${ajaxOptions.data.key}`;
+      }
     },
   });
 
-  const [passowodPopup, setPassowodPopup] = useState(false);
-  useEffect(() => setPassowodPopup(true), []);
-  const [visible, setVisible] = useState(false);
-
-  const [itemSelected, setItemSelected] = useState(null);
-  const hidden = useRef(false);
-  const handleRequestPassword = (e: any) => {
-    const itemSelected = { ...e.row.data };
-
-    // setItemSelected(itemSelected);
-    console.log(itemSelected);
-  };
-  const handleEvent = (value: any, eventName: string) => {
-    console.log(eventName);
-    console.log(value);
-  };
-
-  const handleRequestPassword2 = useCallback((e: any) => {
+  const handleRequestPassword = useCallback((e: any) => {
     const itemSelected = { ...e.row.data };
 
     let result = confirm(
@@ -77,20 +71,9 @@ export default function UsuariosPage() {
         dataSource={dataSource}
         remoteOperations={true}
         keyExpr="ID"
+        columnAutoWidth={true}
         columnHidingEnabled={true}
         showBorders={true}
-        onEditingStart={(value) => handleEvent(value, 'EditingStart')}
-        onInitNewRow={(value) => handleEvent(value, 'InitNewRow')}
-        onRowInserting={(value) => handleEvent(value, 'RowInserting')}
-        onRowInserted={(value) => handleEvent(value, 'RowInserted')}
-        onRowUpdating={(value) => handleEvent(value, 'RowUpdating')}
-        onRowUpdated={(value) => handleEvent(value, 'RowUpdated')}
-        onRowRemoving={(value) => handleEvent(value, 'RowRemoving')}
-        onRowRemoved={(value) => handleEvent(value, 'RowRemoved')}
-        onSaving={(value) => handleEvent(value, 'Saving')}
-        onSaved={(value) => handleEvent(value, 'Saved')}
-        onEditCanceling={(value) => handleEvent(value, 'EditCanceling')}
-        onEditCanceled={(value) => handleEvent(value, 'EditCanceled')}
       >
         <SearchPanel
           width={300}
@@ -106,11 +89,21 @@ export default function UsuariosPage() {
           showInfo={true}
           showNavigationButtons={true}
         />
-        <Column dataField="Nombre" />
-        <Column dataField="Apellido" />
-        <Column dataField="Correo" />
-        <Column dataField="Telefono" width={100} />
+        <Column dataField="Nombre">
+          <RequiredRule />
+        </Column>
+        <Column dataField="Apellido">
+          <RequiredRule />
+        </Column>
+        <Column dataField="Correo">
+          <RequiredRule />
+          <EmailRule />
+        </Column>
+        <Column dataField="Telefono" width={100}>
+          <PatternRule message="Telefono invalido" pattern={/^[0-9]{8}$/} />
+        </Column>
         <Column dataField="Role" caption="Role" width={135}>
+          <RequiredRule />
           <Lookup dataSource={roles} displayExpr="Name" valueExpr="ID" />
         </Column>
         <Column
@@ -131,7 +124,7 @@ export default function UsuariosPage() {
           <Button
             hint="Cambiar contrasena"
             icon="email"
-            onClick={handleRequestPassword2}
+            onClick={handleRequestPassword}
           />
         </Column>
 

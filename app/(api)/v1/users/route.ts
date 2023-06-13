@@ -117,3 +117,24 @@ export async function GET(request: Request) {
     totalCount: 100,
   });
 }
+
+export async function POST(request: Request) {
+  const res = await request.json();
+  console.log(res);
+
+  return NextResponse.json({});
+}
+
+export async function PUT(request: Request) {
+  const res = await request.json();
+  console.log(res);
+
+  return NextResponse.json(res);
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  console.log(id);
+  return NextResponse.json({});
+}
