@@ -31,8 +31,6 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   const res = await request.json();
-  console.log(res);
-
   return NextResponse.json(res);
 }
 

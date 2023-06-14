@@ -14,8 +14,6 @@ async function request<TResponse>(
 ): Promise<TResponse> {
   // Attach access token
   const userData = await user();
-  console.log(userData.tokenInfo?.accessToken);
-
   headers.append('Authorization', `bearer ${userData.tokenInfo?.accessToken}`);
   headers.append('Content-Type', 'application/json');
 
@@ -35,8 +33,6 @@ async function request<TResponse>(
   if (data?.body) {
     raw = JSON.stringify(data?.body);
   }
-
-  console.log(raw);
 
   const response = await fetch(apiUrl, {
     method,

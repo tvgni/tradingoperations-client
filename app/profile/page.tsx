@@ -47,7 +47,6 @@ const UserProfileForm = () => {
   const handleSubmitProfile = (e: any) => {
     e.preventDefault();
     // console.log(profile);
-    // console.log(password);
   };
   const handleSubmitPassword = async (e: any) => {
     e.preventDefault();
@@ -94,7 +93,6 @@ const UserProfileForm = () => {
   const confirmOptions = {
     mode: 'password',
     onValueChanged: ({ value }: { value: string }) => {
-      console.log(value);
       setPassword({ ...password, confirmPassword: value });
     },
     buttons: [
@@ -173,10 +171,16 @@ const UserProfileForm = () => {
                 message="El apellido debe contener al menos 2 letra"
               />
             </SimpleItem>
-            <SimpleItem dataField="phoneNumber">
+            <SimpleItem
+              dataField="phoneNumber"
+              editorOptions={{
+                mask: '\\+\\(5\\0\\5) X0000000',
+                useMaskedValue: true,
+                maskRules: { X: /[2-9]/ },
+              }}
+            >
               <Label text="Telefono" />
               <RequiredRule />
-              <PatternRule message="Telefono invalido" pattern={/^[0-9]{8}$/} />
             </SimpleItem>
             <SimpleItem dataField="email" editorType="dxTextBox">
               <Label text="Correo" />
