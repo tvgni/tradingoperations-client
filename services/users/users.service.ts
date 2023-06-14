@@ -18,9 +18,8 @@ const UsersService = {
     return await ApiService.post('/v1/users', user);
   },
 
-  deleteUser: async (id: number): Promise<UserModel[]> => {
-    const users = await ApiService.get<UserModel[]>('/users');
-    return users;
+  deleteUser: async (id: string | null) => {
+    return await ApiService.delete(`/v1/users/${id}`);
   },
 };
 

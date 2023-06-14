@@ -33,7 +33,6 @@ async function request<TResponse>(
   if (data?.body) {
     raw = JSON.stringify(data?.body);
   }
-  console.log(raw);
 
   const response = await fetch(apiUrl, {
     method,
@@ -41,7 +40,12 @@ async function request<TResponse>(
     body: raw,
   });
   // todo: Validar errores de servidor
-  return await response.json();
+  if (response.status !== 204) {
+    return await response.json();
+  }
+  return new Promise((resolve) => {
+    resolve({} as TResponse);
+  });
 }
 
 const ApiService = {
