@@ -1,9 +1,5 @@
 import ApiService from '@/services/api.base.service';
-import {
-  UserCreateModel,
-  UserModel,
-  UserPagedModel,
-} from './user.service.model';
+import { UserCreateModel, UserPagedModel } from './user.service.model';
 
 const UsersService = {
   getUsers: async (page: number, perPage: number): Promise<UserPagedModel> => {
@@ -20,6 +16,12 @@ const UsersService = {
 
   deleteUser: async (id: string | null) => {
     return await ApiService.delete(`/v1/users/${id}`);
+  },
+
+  sendEmailChangePassword: async (email: string) => {
+    return await ApiService.post('/v1/users/send-email-change-password', {
+      email,
+    });
   },
 };
 

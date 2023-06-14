@@ -34,13 +34,15 @@ async function request<TResponse>(
     raw = JSON.stringify(data?.body);
   }
 
+  console.log(raw);
+
   const response = await fetch(apiUrl, {
     method,
     headers,
     body: raw,
   });
   // todo: Validar errores de servidor
-  if (response.status !== 204) {
+  if (response.status !== 204 && response.status !== 201) {
     return await response.json();
   }
   return new Promise((resolve) => {

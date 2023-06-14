@@ -49,18 +49,19 @@ export default function UsuariosPage() {
     },
   });
 
-  const handleRequestPassword = useCallback((e: any) => {
+  const handleRequestPassword = useCallback(async (e: any) => {
     const itemSelected = { ...e.row.data };
 
-    let result = confirm(
+    let result = await confirm(
       `<i>Seguro que desea enviar una solicitud de cambio de contraseña al correo ${itemSelected.Correo}?</i>`,
       'Contraseña'
     );
-    result.then((dialogResult) => {
-      if (dialogResult) {
-        console.log(itemSelected);
-      }
-    });
+    if (result) {
+      await fetch('/v1/users/email', {
+        method: 'POST',
+        body: JSON.stringify({ email: itemSelected.email }),
+      });
+    }
   }, []);
 
   return (

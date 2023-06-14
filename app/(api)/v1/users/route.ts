@@ -36,6 +36,11 @@ export async function PUT(request: Request) {
   return NextResponse.json(res);
 }
 
+/**
+ * Delete a user
+ * @param request
+ * @returns
+ */
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
