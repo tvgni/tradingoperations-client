@@ -7,14 +7,16 @@
       "/profile",
       "/trades",
       "/v1/users",
-      "/v1/users/email"
+      "/v1/users/email",
+      "/v1/users/password"
     ]
   },
   {
     "role": "Trader",
     "routes": [
       "/dashboard",
-      "/profile"
+      "/profile",
+      "/v1/users/password"
     ]
   }
 ]

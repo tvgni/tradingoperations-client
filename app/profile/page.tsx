@@ -19,7 +19,7 @@ import dxForm from 'devextreme/ui/form';
 
 const UserProfileForm = () => {
   const [profile, setProfile] = useState(null as any);
-  const [password] = useState({
+  const [password, setPassword] = useState({
     password: '',
     confirmPassword: '',
   });
@@ -44,10 +44,17 @@ const UserProfileForm = () => {
     });
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmitProfile = (e: any) => {
     e.preventDefault();
     // console.log(profile);
     // console.log(password);
+  };
+  const handleSubmitPassword = async (e: any) => {
+    e.preventDefault();
+    await fetch('/v1/users/password', {
+      method: 'POST',
+      body: JSON.stringify(password),
+    });
   };
 
   const imageLoader = () => {
@@ -86,6 +93,10 @@ const UserProfileForm = () => {
   };
   const confirmOptions = {
     mode: 'password',
+    onValueChanged: ({ value }: { value: string }) => {
+      console.log(value);
+      setPassword({ ...password, confirmPassword: value });
+    },
     buttons: [
       {
         name: 'password',
@@ -127,7 +138,7 @@ const UserProfileForm = () => {
           </div>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitProfile}>
         <Form
           formData={profile}
           readOnly={false}
@@ -179,7 +190,7 @@ const UserProfileForm = () => {
           />
         </Form>
       </form>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitPassword}>
         <Form
           formData={password}
           readOnly={false}

@@ -23,6 +23,12 @@ const UsersService = {
       email,
     });
   },
+
+  changePassword: async (password: string) => {
+    return await ApiService.post('/v1/users/me/change-password', {
+      password,
+    });
+  },
 };
 
 export default UsersService;

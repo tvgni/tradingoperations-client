@@ -26,7 +26,7 @@ const roles = [
 const allowedPageSizes = [10, 50, 100];
 
 export default function UsuariosPage() {
-  const url = 'http://localhost:3000/v1';
+  const url = '/v1';
   const dataSource = createStore({
     key: 'user_id',
     loadUrl: `${url}/users`,
