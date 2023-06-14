@@ -9,7 +9,11 @@ export async function APIClient<TResponse>(
         body?: any;
       }
     | null
-    | undefined = null
+    | undefined = null,
+  notifyData: {
+    successText: string;
+    errorText: string;
+  }
 ): Promise<TResponse> {
   // Add query params
   let queryParams: URLSearchParams = new URLSearchParams();
@@ -20,7 +24,6 @@ export async function APIClient<TResponse>(
 
   // Request to the api
   const apiUrl = `${path}${queryParams}`;
-
   let raw = null;
   if (data?.body) {
     raw = JSON.stringify(data?.body);
@@ -34,12 +37,15 @@ export async function APIClient<TResponse>(
     headers,
   });
 
-  const body = await response.json();
+  const jsonBody = await response.json();
+  console.log(jsonBody);
 
   notify(
     {
       message: `${
-        response.ok ? 'Contraseña Actualizado correctamente' : body.message
+        response.ok
+          ? notifyData.successText
+          : notifyData.errorText + ' | ' + jsonBody?.message
       }`,
       width: 450,
     },
@@ -47,5 +53,5 @@ export async function APIClient<TResponse>(
     2000
   );
 
-  return body;
+  return jsonBody;
 }

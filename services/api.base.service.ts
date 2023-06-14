@@ -43,12 +43,16 @@ async function request<TResponse>(
   if (response.ok) {
     if (response.status !== 204 && response.status !== 201) {
       return await response.json();
+    } else {
+      return new Promise((resolve) => {
+        resolve({} as TResponse);
+      });
     }
+  } else {
+    // todo: Validar errores de servidor
+    const errorResponse = await response.json();
+    throw new APIError(errorResponse.message, errorResponse);
   }
-
-  // todo: Validar errores de servidor
-  const errorResponse = await response.json();
-  throw new APIError(errorResponse.message, errorResponse);
 }
 
 class APIError extends Error {

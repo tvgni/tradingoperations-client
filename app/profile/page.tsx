@@ -55,7 +55,12 @@ const UserProfileForm = () => {
   const handleSubmitPassword = async (e: any) => {
     e.preventDefault();
     setShowLoading(true);
-    await APIClient('POST', '/v1/users/password', { body: password });
+    await APIClient(
+      'POST',
+      '/v1/users/password',
+      { body: password },
+      { successText: 'Actualizado exitosamente', errorText: 'Error: ' }
+    );
     setShowLoading(false);
   };
 
