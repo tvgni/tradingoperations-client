@@ -17,6 +17,7 @@ import { Switch, Tooltip } from 'devextreme-react';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { useCallback } from 'react';
 import { confirm } from 'devextreme/ui/dialog';
+import { APIClient } from '@/utils/apiClient';
 
 const roles = [
   { ID: 'Admin', Name: 'Administrador' },
@@ -57,10 +58,12 @@ export default function UsuariosPage() {
       'Contraseña'
     );
     if (result) {
-      await fetch('/v1/users/email', {
-        method: 'POST',
-        body: JSON.stringify({ email: itemSelected.email }),
-      });
+      await APIClient(
+        'POST',
+        '/v1/users/email',
+        { body: { email: itemSelected.email } },
+        { successText: 'Correo enviado exitosamente', errorText: 'Error: ' }
+      );
     }
   }, []);
 

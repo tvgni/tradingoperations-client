@@ -62,6 +62,7 @@ const UserProfileForm = () => {
       { successText: 'Actualizado exitosamente', errorText: 'Error: ' }
     );
     setShowLoading(false);
+    formInstancePassword.component?.resetValues();
   };
 
   const imageLoader = () => {
