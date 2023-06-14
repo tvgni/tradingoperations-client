@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
  */
 export async function POST(request: Request) {
   const res = await request.json();
-  const data = await UsersService.changePassword(res.password);
+  await UsersService.changePassword(res.password);
 
   return NextResponse.json({});
 }

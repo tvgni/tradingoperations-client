@@ -54,6 +54,12 @@ const UserProfileForm = () => {
       method: 'POST',
       body: JSON.stringify(password),
     });
+
+    // setPassword({
+    //   password: '',
+    //   confirmPassword: '',
+    // });
+    formInstancePassword.component?.resetValues();
   };
 
   const imageLoader = () => {
