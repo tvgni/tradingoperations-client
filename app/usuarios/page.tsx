@@ -11,15 +11,16 @@ import DataGrid, {
   RequiredRule,
   EmailRule,
   PatternRule,
+  Label,
 } from 'devextreme-react/data-grid';
-import { Switch } from 'devextreme-react';
+import { Switch, Tooltip } from 'devextreme-react';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { useCallback } from 'react';
 import { confirm } from 'devextreme/ui/dialog';
 
 const roles = [
-  { ID: 1, Name: 'Administrador' },
-  { ID: 2, Name: 'Trader' },
+  { ID: 'Admin', Name: 'Administrador' },
+  { ID: 'Trader', Name: 'Trader' },
 ];
 
 const allowedPageSizes = [10, 50, 100];
@@ -27,7 +28,7 @@ const allowedPageSizes = [10, 50, 100];
 export default function UsuariosPage() {
   const url = 'http://localhost:3000/v1';
   const dataSource = createStore({
-    key: 'ID',
+    key: 'user_id',
     loadUrl: `${url}/users`,
     insertUrl: `${url}/users`,
     updateUrl: `${url}/users`,
@@ -70,7 +71,7 @@ export default function UsuariosPage() {
         height={'71vh'}
         dataSource={dataSource}
         remoteOperations={true}
-        keyExpr="ID"
+        keyExpr="user_id"
         columnAutoWidth={true}
         columnHidingEnabled={true}
         showBorders={true}
@@ -89,34 +90,72 @@ export default function UsuariosPage() {
           showInfo={true}
           showNavigationButtons={true}
         />
-        <Column dataField="Nombre">
+        <Column dataField="given_name" caption="Nombre">
           <RequiredRule />
         </Column>
-        <Column dataField="Apellido">
+        <Column dataField="family_name" caption="Apellido">
           <RequiredRule />
         </Column>
-        <Column dataField="Correo">
+        <Column dataField="email" caption="Correo">
           <RequiredRule />
           <EmailRule />
         </Column>
-        <Column dataField="Telefono" width={100}>
-          <PatternRule message="Telefono invalido" pattern={/^[0-9]{8}$/} />
-        </Column>
-        <Column dataField="Role" caption="Role" width={135}>
+        <Column
+          dataField="phone_number"
+          caption="Telefono"
+          editorOptions={{
+            mask: '\\+\\(5\\0\\5) X0000000',
+            useMaskedValue: true,
+            maskRules: { X: /[2-9]/ },
+          }}
+        ></Column>
+        <Column dataField="role" caption="Role">
           <RequiredRule />
           <Lookup dataSource={roles} displayExpr="Name" valueExpr="ID" />
         </Column>
         <Column
-          dataField="Estado"
-          width={125}
-          dataType="number"
-          cellRender={({ value }) => (value === 1 ? 'Activo' : 'Deshabilitado')}
-          editCellRender={({ value, setValue }) => (
-            <Switch
-              defaultValue={value === 1}
-              onValueChange={(value) => setValue(value ? 1 : 2)}
-            />
-          )}
+          dataField="blocked"
+          caption="Estado"
+          dataType="boolean"
+          cellRender={(item) => {
+            const data = item.data.invited
+              ? {
+                  text: 'Pendiente',
+                  tooltip: 'Cuenta pendiente de regristro',
+                }
+              : item.value
+              ? {
+                  text: 'Deshabilitado',
+                  tooltip: 'Cuenta deshabilitada',
+                }
+              : {
+                  text: 'Activo',
+                  tooltip: 'Cuenta activa',
+                };
+
+            return (
+              <div>
+                <span id={`tooltip${item.rowIndex}`}>{data.text}</span>
+
+                <Tooltip
+                  target={`#tooltip${item.rowIndex}`}
+                  showEvent="mouseenter"
+                  hideEvent="mouseleave"
+                  hideOnOutsideClick={false}
+                >
+                  <div>{data.tooltip}</div>
+                </Tooltip>
+              </div>
+            );
+          }}
+          editCellRender={({ value, setValue }) => {
+            return (
+              <Switch
+                defaultValue={value === undefined ? false : !value}
+                onValueChange={(status) => setValue(!status)}
+              />
+            );
+          }}
         ></Column>
         <Column type="buttons" width={110}>
           <Button name="edit" />
