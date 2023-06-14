@@ -16,6 +16,9 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { InitializedEventInfo } from 'devextreme/events';
 import dxForm from 'devextreme/ui/form';
+import notify from 'devextreme/ui/notify';
+import LoadPanel from 'devextreme-react/load-panel';
+import { APIClient } from '@/utils/apiClient';
 
 const UserProfileForm = () => {
   const [profile, setProfile] = useState(null as any);
@@ -29,7 +32,7 @@ const UserProfileForm = () => {
   const [formInstancePassword, setInstancePassword] = useState(
     {} as InitializedEventInfo<dxForm>
   );
-
+  const [showLoading, setShowLoading] = useState(false);
   const { user, error, isLoading } = useUser();
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -48,18 +51,12 @@ const UserProfileForm = () => {
     e.preventDefault();
     // console.log(profile);
   };
+
   const handleSubmitPassword = async (e: any) => {
     e.preventDefault();
-    await fetch('/v1/users/password', {
-      method: 'POST',
-      body: JSON.stringify(password),
-    });
-
-    // setPassword({
-    //   password: '',
-    //   confirmPassword: '',
-    // });
-    formInstancePassword.component?.resetValues();
+    setShowLoading(true);
+    await APIClient('POST', '/v1/users/password', { body: password });
+    setShowLoading(false);
   };
 
   const imageLoader = () => {
@@ -126,7 +123,7 @@ const UserProfileForm = () => {
   };
 
   return (
-    <div>
+    <div id="prifileContent">
       <h4 className="page-title">Mi Perfil</h4>
       <div className="grid gap-4 grid-cols-1 m-25">
         <div className="mx-auto">
@@ -238,6 +235,11 @@ const UserProfileForm = () => {
           />
         </Form>
       </form>
+      <LoadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        position={{ of: '#prifileContent' }}
+        visible={showLoading}
+      />
     </div>
   );
 };

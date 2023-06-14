@@ -39,13 +39,25 @@ async function request<TResponse>(
     headers,
     body: raw,
   });
-  // todo: Validar errores de servidor
-  if (response.status !== 204 && response.status !== 201) {
-    return await response.json();
+
+  if (response.ok) {
+    if (response.status !== 204 && response.status !== 201) {
+      return await response.json();
+    }
   }
-  return new Promise((resolve) => {
-    resolve({} as TResponse);
-  });
+
+  // todo: Validar errores de servidor
+  const errorResponse = await response.json();
+  throw new APIError(errorResponse.message, errorResponse);
+}
+
+class APIError extends Error {
+  response = null;
+  constructor(msg: string, response: any) {
+    super(msg);
+    this.response = response;
+    Object.setPrototypeOf(this, APIError.prototype);
+  }
 }
 
 const ApiService = {
