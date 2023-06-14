@@ -38,7 +38,6 @@ export async function APIClient<TResponse>(
   });
 
   const jsonBody = await response.json();
-  console.log(jsonBody);
 
   notify(
     {
@@ -48,6 +47,7 @@ export async function APIClient<TResponse>(
           : notifyData.errorText + ' | ' + jsonBody?.message
       }`,
       width: 450,
+      position: 'bottom center',
     },
     response.ok ? 'success' : 'error',
     2000
