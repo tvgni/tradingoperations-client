@@ -16,7 +16,6 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { InitializedEventInfo } from 'devextreme/events';
 import dxForm from 'devextreme/ui/form';
-import notify from 'devextreme/ui/notify';
 import LoadPanel from 'devextreme-react/load-panel';
 import { APIClient } from '@/utils/apiClient';
 

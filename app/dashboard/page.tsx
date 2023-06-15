@@ -1,30 +1,27 @@
+import BarChart from '@/components/charts/bar';
+import LineChart from '@/components/charts/lineChart';
+import PieChartComponent from '@/components/charts/pieChart';
+import StackedBarChart from '@/components/charts/stackedBar';
+
 export default function dashboarpage() {
   return (
     <div>
-      <h4 className="page-title">Dashboard Page!</h4>
+      <h4 className="page-title">Dashboard</h4>
 
-      <p>
-        is simply dummy text of the printing and typesetting industry. Lorem
-        Ipsum has been the industrys standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a
-        type specimen book. It has survived not only five centuries, but also
-        the leap into electronic typesetting, remaining essentially unchanged.
-        It was popularised in the 1960s with the release of Letraset sheets
-        containing Lorem Ipsum passages, and more recently with desktop
-        publishing software like Aldus PageMaker including versions of Lorem
-        Ipsum.
-      </p>
-      <p>
-        is simply dummy text of the printing and typesetting industry. Lorem
-        Ipsum has been the industrys standard dummy text ever since the 1500s,
-        when an unknown printer took a galley of type and scrambled it to make a
-        type specimen book. It has survived not only five centuries, but also
-        the leap into electronic typesetting, remaining essentially unchanged.
-        It was popularised in the 1960s with the release of Letraset sheets
-        containing Lorem Ipsum passages, and more recently with desktop
-        publishing software like Aldus PageMaker including versions of Lorem
-        Ipsum.
-      </p>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <BarChart></BarChart>
+        </div>
+        <div>
+          <StackedBarChart></StackedBarChart>
+        </div>
+        <div>
+          <LineChart></LineChart>
+        </div>
+        <div>
+          <PieChartComponent></PieChartComponent>
+        </div>
+      </div>
     </div>
   );
 }

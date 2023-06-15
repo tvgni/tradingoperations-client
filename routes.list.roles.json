@@ -15,6 +15,7 @@
     "role": "Trader",
     "routes": [
       "/dashboard",
+      "/trades",
       "/profile",
       "/v1/users/password"
     ]

@@ -14,6 +14,7 @@ async function request<TResponse>(
 ): Promise<TResponse> {
   // Attach access token
   const userData = await user();
+
   headers.append('Authorization', `bearer ${userData.tokenInfo?.accessToken}`);
   headers.append('Content-Type', 'application/json');
 

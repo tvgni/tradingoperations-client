@@ -10,8 +10,6 @@ import DataGrid, {
   Button,
   RequiredRule,
   EmailRule,
-  PatternRule,
-  Label,
 } from 'devextreme-react/data-grid';
 import { Switch, Tooltip } from 'devextreme-react';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
@@ -80,11 +78,7 @@ export default function UsuariosPage() {
         columnHidingEnabled={true}
         showBorders={true}
       >
-        <SearchPanel
-          width={300}
-          visible={true}
-          onTextChange={(c) => console.log(c)}
-        />
+        <SearchPanel width={300} visible={true} />
         <Paging defaultPageSize={10} />
         <Pager
           visible={true}

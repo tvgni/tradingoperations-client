@@ -1,5 +1,6 @@
 'use client';
-import ErrorPopup from '@/utils/ErrorPopup';
+
+import ErrorPopup from '@/components/ErrorPopup';
 
 export default function Error({
   error,
