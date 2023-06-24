@@ -15,8 +15,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url));
     }
 
-    console.log(request.nextUrl.pathname);
-
     const route = pageRoutes.find(
       (pageRoute) => pageRoute.role === session.user?.role
     );
@@ -46,6 +44,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|favicon-32x32.png).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|favicon-32x32.png|eye.png).*)',
   ],
 };

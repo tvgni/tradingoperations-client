@@ -1,10 +1,11 @@
 'use client';
 import React from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { menu } from './menus';
 import List from 'devextreme-react/list';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { menu } from './menus';
 
 const menuRender = (data: any) => {
   return (

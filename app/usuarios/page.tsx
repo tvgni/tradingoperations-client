@@ -1,259 +1,183 @@
 'use client';
-import { useState } from 'react';
 import DataGrid, {
   Column,
   Paging,
   Pager,
   Editing,
   Lookup,
-  FilterRow,
+  Popup,
+  SearchPanel,
+  Button,
+  RequiredRule,
+  EmailRule,
 } from 'devextreme-react/data-grid';
-import DropDownBox from 'devextreme-react/drop-down-box';
-import { Switch } from 'devextreme-react';
-
-const columns = ['Nombre', 'Correo', 'Telefono', 'Role', 'Estado'];
-
-export const customers = [
-  {
-    ID: 1,
-    Nombre: 'Anika',
-    Apellido: 'Ruiz',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Andrea',
-    Apellido: 'Estrada',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 1,
-  },
-  {
-    ID: 2,
-    Nombre: 'Adrian',
-    Apellido: 'Estrada',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 1,
-    Estado: 2,
-  },
-  {
-    ID: 2,
-    Nombre: 'Alfred',
-    Apellido: 'Canceco',
-    Correo: 'Ark@gmail.com',
-    Telefono: '8288-9899',
-    Role: 2,
-    Estado: 2,
-  },
-];
+import { Switch, Tooltip } from 'devextreme-react';
+import { createStore } from 'devextreme-aspnet-data-nojquery';
+import { useCallback } from 'react';
+import { confirm } from 'devextreme/ui/dialog';
+import { APIClient } from '@/utils/apiClient';
 
 const roles = [
-  { ID: 1, Name: 'Administradores' },
-  { ID: 2, Name: 'Traders' },
+  { ID: 'Admin', Name: 'Administrador' },
+  { ID: 'Trader', Name: 'Trader' },
 ];
 
-const states = [
-  { ID: 1, Name: 'Activo' },
-  { ID: 2, Name: 'Inactivo' },
-  // Agrega más objetos de estado según sea necesario
-];
-
-const CustomEditCell = (props) => {
-  const { value, onValueChange } = props;
-
-  return (
-    <DropDownBox
-      value={value}
-      dataSource={states}
-      displayExpr="Name"
-      valueExpr="ID"
-      onValueChanged={onValueChange}
-    />
-  );
-};
-
-const customizeEditingToolbar = (toolbarOptions) => {
-  toolbarOptions.items.unshift({
-    widget: 'dxButton',
-    location: 'before',
-    options: {
-      text: 'Opción personalizada',
-      onClick: () => handleCustomOptionClick(),
-    },
-  });
-};
-
-const handleCustomOptionClick = () => {
-  // Lógica para manejar el clic en la opción personalizada
-  console.log('Opción personalizada');
-};
-
-function logEvent(events, eventName) {
-  return [eventName, ...events];
-}
-
-const allowedPageSizes = [2, 4, 8];
+const allowedPageSizes = [10, 50, 100];
 
 export default function UsuariosPage() {
-  const [events, setEvents] = useState([]);
+  const url = '/v1';
+  const dataSource = createStore({
+    key: 'user_id',
+    loadUrl: `${url}/users`,
+    insertUrl: `${url}/users`,
+    updateUrl: `${url}/users`,
+    deleteUrl: `${url}/users`,
+    onBeforeSend: (method, ajaxOptions) => {
+      if (ajaxOptions.method === 'POST') {
+        ajaxOptions.data = ajaxOptions.data.values;
+      }
+      if (ajaxOptions.method === 'PUT') {
+        ajaxOptions.data = JSON.stringify({
+          id: ajaxOptions.data.key,
+          data: ajaxOptions.data.values,
+        });
+      }
+      if (ajaxOptions.method === 'DELETE') {
+        ajaxOptions.url = `${ajaxOptions.url}?id=${ajaxOptions.data.key}`;
+      }
+    },
+  });
 
-  const clearEvents = () => {
-    setEvents([]);
-  };
+  const handleRequestPassword = useCallback(async (e: any) => {
+    const itemSelected = { ...e.row.data };
 
-  const handleEvent = (eventName) => {
-    setEvents((prevEvents) => logEvent(prevEvents, eventName));
-  };
-
-  const handleChangePassword = (e) => {
-    // Lógica para cambiar la contraseña del usuario
-    console.log('Cambiar contraseña del usuario con ID:', e.data.id);
-  };
+    let result = await confirm(
+      `<i>Seguro que desea enviar una solicitud de cambio de contraseña al correo ${itemSelected.Correo}?</i>`,
+      'Contraseña'
+    );
+    if (result) {
+      await APIClient(
+        'POST',
+        '/v1/users/email',
+        { body: { email: itemSelected.email } },
+        { successText: 'Correo enviado exitosamente', errorText: 'Error: ' }
+      );
+    }
+  }, []);
 
   return (
     <div>
-      <h4 className="page-title">Usuarios Page!</h4>
+      <h4 className="page-title">Administracion de Cuentas</h4>
 
       <DataGrid
-        dataSource={customers}
-        keyExpr="ID"
-        //defaultColumns={columns}
+        height={'71vh'}
+        dataSource={dataSource}
+        remoteOperations={true}
+        keyExpr="user_id"
+        columnAutoWidth={true}
+        columnHidingEnabled={true}
         showBorders={true}
-        onEditingStart={() => handleEvent('EditingStart')}
-        onInitNewRow={() => handleEvent('InitNewRow')}
-        onRowInserting={() => handleEvent('RowInserting')}
-        onRowInserted={() => handleEvent('RowInserted')}
-        onRowUpdating={() => handleEvent('RowUpdating')}
-        onRowUpdated={() => handleEvent('RowUpdated')}
-        onRowRemoving={() => handleEvent('RowRemoving')}
-        onRowRemoved={() => handleEvent('RowRemoved')}
-        onSaving={() => handleEvent('Saving')}
-        onSaved={() => handleEvent('Saved')}
-        onEditCanceling={() => handleEvent('EditCanceling')}
-        onEditCanceled={() => handleEvent('EditCanceled')}
       >
-        {/*<Column
-            dataField="Estado"
-            caption="State"
-            width={125}
-            editCellComponent={CustomEditCell}
-          />*/}
-
-        <FilterRow visible={true} />
-
-        <Column dataField="Nombre" />
-
-        <Column dataField="Apellido" />
-
-        <Column dataField="Correo" />
-
-        <Column dataField="Telefono" />
-
-        <Column dataField="Role" caption="Role" width={125}>
+        <SearchPanel width={300} visible={true} />
+        <Paging defaultPageSize={10} />
+        <Pager
+          visible={true}
+          allowedPageSizes={allowedPageSizes}
+          displayMode="full"
+          showPageSizeSelector={true}
+          showInfo={true}
+          showNavigationButtons={true}
+        />
+        <Column dataField="given_name" caption="Nombre">
+          <RequiredRule />
+        </Column>
+        <Column dataField="family_name" caption="Apellido">
+          <RequiredRule />
+        </Column>
+        <Column dataField="email" caption="Correo">
+          <RequiredRule />
+          <EmailRule />
+        </Column>
+        <Column
+          dataField="phone_number"
+          caption="Telefono"
+          editorOptions={{
+            mask: '\\+\\(5\\0\\5) X0000000',
+            useMaskedValue: true,
+            maskRules: { X: /[2-9]/ },
+          }}
+        ></Column>
+        <Column dataField="role" caption="Role">
+          <RequiredRule />
           <Lookup dataSource={roles} displayExpr="Name" valueExpr="ID" />
         </Column>
-
         <Column
-          dataField="Estado"
+          dataField="blocked"
           caption="Estado"
-          width={125}
           dataType="boolean"
-          editorOptions={{ switchedOnText: 'Yes', switchedOffText: 'No' }}
-          editorRender={({ value, setValue }) => (
-            <Switch
-              value={value}
-              onValueChanged={(e) => setValue(e.value)}
-              onOptionChanged={onSwitchValueChanged}
-            />
-          )}
+          cellRender={(item) => {
+            const data = item.data.invited
+              ? {
+                  text: 'Pendiente',
+                  tooltip: 'Cuenta pendiente de regristro',
+                }
+              : item.value
+              ? {
+                  text: 'Deshabilitado',
+                  tooltip: 'Cuenta deshabilitada',
+                }
+              : {
+                  text: 'Activo',
+                  tooltip: 'Cuenta activa',
+                };
+
+            return (
+              <div>
+                <span id={`tooltip${item.rowIndex}`}>{data.text}</span>
+
+                <Tooltip
+                  target={`#tooltip${item.rowIndex}`}
+                  showEvent="mouseenter"
+                  hideEvent="mouseleave"
+                  hideOnOutsideClick={false}
+                >
+                  <div>{data.tooltip}</div>
+                </Tooltip>
+              </div>
+            );
+          }}
+          editCellRender={({ value, setValue }) => {
+            return (
+              <Switch
+                defaultValue={value === undefined ? false : !value}
+                onValueChange={(status) => setValue(!status)}
+              />
+            );
+          }}
         ></Column>
+        <Column type="buttons" width={110}>
+          <Button name="edit" />
+          <Button name="delete" />
+          <Button
+            hint="Cambiar contrasena"
+            icon="email"
+            onClick={handleRequestPassword}
+          />
+        </Column>
 
         <Editing
           mode="popup"
           allowUpdating={true}
           allowDeleting={true}
           allowAdding={true}
-          editCellComponent={CustomEditCell}
-          customizeToolbar={customizeEditingToolbar}
-        ></Editing>
-
-        {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
-                  <DropDownButton
-                    text="Edit"
-                    items={[
-                      { text: 'Edit', onClick: () => popup?.option('visible', false) },
-                      { text: 'Delete', onClick: () => popup?.option('visible', false) },
-                    ]}
-                  />
-                )} />
-
-                  </Editing>*/}
-
-        {/*<Editing mode="popup" allowUpdating={true} allowDeleting={true} allowAdding={true} popupRender={(popup) => (
-              <DropDownButton
-                text="Edit"
-                items={[
-                  { text: 'Edit', onClick: () => popup?.option('visible', false) },
-                  { text: 'Delete', onClick: () => popup?.option('visible', false) },
-                ]}
-              />
-            )} />*/}
-
-        <Paging defaultPageSize={4} />
-        <Pager
-          showPageSizeSelector={true}
-          allowedPageSizes={allowedPageSizes}
-        />
+        >
+          <Popup
+            title="Cuenta de usuario"
+            showTitle={true}
+            width={700}
+            height={525}
+          />
+        </Editing>
       </DataGrid>
     </div>
   );

@@ -15,7 +15,6 @@ const requestResponseIntersector = () => {
 
 export async function user(): Promise<authUser> {
   const { req, res } = requestResponseIntersector();
-
   const session = await auth0GetSession(req, res);
 
   return {

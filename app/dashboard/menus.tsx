@@ -5,8 +5,8 @@ export const menuTrader = [
 
 export const menuAdmin = [
   { id: 1, text: 'Dashboard', icon: 'product', path: '/dashboard' },
-  { id: 2, text: 'Importar trades', icon: 'card', path: '/trades' },
-  { id: 3, text: 'Usuarios', icon: 'card', path: '/usuarios' },
+  { id: 2, text: 'Usuarios', icon: 'card', path: '/usuarios' },
+  { id: 3, text: 'Importar trades', icon: 'card', path: '/trades' },
 ];
 
 export const menu = [

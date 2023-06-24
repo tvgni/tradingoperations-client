@@ -1,80 +1,251 @@
 'use client';
 import React, { useState } from 'react';
-import { Button, TextBox } from 'devextreme-react';
+import Form, {
+  ButtonItem,
+  GroupItem,
+  SimpleItem,
+  Label,
+  CompareRule,
+  EmailRule,
+  PatternRule,
+  RequiredRule,
+  StringLengthRule,
+} from 'devextreme-react/form';
+import Validator from 'devextreme/ui/validator';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import Image from 'next/image';
+import { InitializedEventInfo } from 'devextreme/events';
+import dxForm from 'devextreme/ui/form';
+import LoadPanel from 'devextreme-react/load-panel';
+import { APIClient } from '@/utils/apiClient';
 
 const UserProfileForm = () => {
-  const [name, setName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [telefono, setTelefono] = useState('');
-  const [pass, setPass1] = useState('');
-  const [confirmpass, setPass2] = useState('');
+  const [profile, setProfile] = useState(null as any);
+  const [password, setPassword] = useState({
+    password: '',
+    confirmPassword: '',
+  });
+  const [, setProfileFormInstance] = useState(
+    {} as InitializedEventInfo<dxForm>
+  );
+  const [formInstancePassword, setInstancePassword] = useState(
+    {} as InitializedEventInfo<dxForm>
+  );
+  const [showLoading, setShowLoading] = useState(false);
+  const { user, error, isLoading } = useUser();
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
-  const [avatar, setAvatar] = useState(null);
+  const { given_name, family_name, phone } = user as any;
+  if (profile === null) {
+    setProfile({
+      firstName: given_name ?? '',
+      lastname: family_name ?? '',
+      phoneNumber: phone ?? '',
+      email: user?.email ?? '',
+    });
+  }
 
-  const handleSubmit = (e) => {
+  const handleSubmitProfile = (e: any) => {
     e.preventDefault();
-    // Aquí puedes realizar la lógica para guardar los datos del perfil del usuario
-    console.log('Nombre:', name);
-    console.log('Apellido:', lastname);
-    console.log('Telefono:', telefono);
-    console.log('Email:', email);
-    console.log('Avatar:', avatar);
+    // console.log(profile);
+  };
+
+  const handleSubmitPassword = async (e: any) => {
+    e.preventDefault();
+    setShowLoading(true);
+    await APIClient(
+      'POST',
+      '/v1/users/password',
+      { body: password },
+      { successText: 'Actualizado exitosamente', errorText: 'Error: ' }
+    );
+    setShowLoading(false);
+    formInstancePassword.component?.resetValues();
+  };
+
+  const imageLoader = () => {
+    return user?.picture ?? '';
+  };
+
+  const changePasswordMode = (name: string) => {
+    const editor = formInstancePassword.component?.getEditor(name);
+    editor?.option(
+      'mode',
+      editor.option('mode') === 'text' ? 'password' : 'text'
+    );
+  };
+
+  const passwordOptions = {
+    mode: 'password',
+    onValueChanged: () => {
+      const editor =
+        formInstancePassword.component?.getEditor('confirmPassword');
+      if (editor?.option('value')) {
+        const instance = Validator.getInstance(editor.element()) as Validator;
+        instance.validate();
+      }
+    },
+    buttons: [
+      {
+        name: 'password',
+        location: 'after',
+        options: {
+          icon: '/eye.png',
+          type: 'default',
+          onClick: () => changePasswordMode('password'),
+        },
+      },
+    ],
+  };
+  const confirmOptions = {
+    mode: 'password',
+    onValueChanged: ({ value }: { value: string }) => {
+      setPassword({ ...password, confirmPassword: value });
+    },
+    buttons: [
+      {
+        name: 'password',
+        location: 'after',
+        options: {
+          icon: '/eye.png',
+          type: 'default',
+          onClick: () => changePasswordMode('confirmPassword'),
+        },
+      },
+    ],
+  };
+  const buttonOptionsProfile = {
+    text: 'Guardar',
+    type: 'default',
+    useSubmitBehavior: true,
+  };
+
+  const buttonOptionsPassword = {
+    text: 'Guardar',
+    type: 'default',
+    useSubmitBehavior: true,
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div style={{ padding: '0 20px' }}>
-        <h2>Perfil de usuario</h2>
-
-        <div className="grid gap-4 grid-cols-3 first-grid-form">
-          <div className="img-form-profile">
-            <img
-              width={140}
-              src="https://cdn.pixabay.com/photo/2016/11/14/17/39/person-1824147_960_720.png"
+    <div id="prifileContent">
+      <h4 className="page-title">Mi Perfil</h4>
+      <div className="grid gap-4 grid-cols-1 m-25">
+        <div className="mx-auto">
+          <div className="relative">
+            <Image
+              className="w-36 h-36 rounded-full"
+              loader={imageLoader}
+              src="my-prifile.png"
+              width={500}
+              height={500}
+              alt="Picture of the author"
             />
-          </div>
-
-          <div>
-            <label>Nombre:</label>
-            <TextBox value={name} />
-          </div>
-          <div>
-            <label>Apellido:</label>
-            <TextBox value={lastname} />
-          </div>
-          <div>
-            <label>Telefono:</label>
-            <TextBox value={telefono} />
-          </div>
-          <div>
-            <label>Email:</label>
-            <TextBox value={email} />
-          </div>
-          <div className="place-self-start mt-2 margen-top">
-            <Button text="Guardar" type="default" useSubmitBehavior={true} />
-          </div>
-        </div>
-
-        <hr></hr>
-
-        <div className="grid gap-4 grid-cols-3">
-          <div>
-            <label>Contraseña:</label>
-            <TextBox mode="password" value={pass} />
-          </div>
-
-          <div>
-            <label>Repetir-Contraseña:</label>
-            <TextBox mode="password" value={confirmpass} />
-          </div>
-
-          <div className="margen-top">
-            <Button text="Guardar" type="default" useSubmitBehavior={true} />
           </div>
         </div>
       </div>
-    </form>
+      <form onSubmit={handleSubmitProfile}>
+        <Form
+          formData={profile}
+          readOnly={false}
+          showColonAfterLabel={true}
+          showValidationSummary={false}
+          validationGroup="profileData"
+          onInitialized={setProfileFormInstance}
+          onFieldDataChanged={(e) => setProfileFormInstance(e)}
+        >
+          <GroupItem caption="Datos Personales" colCount={2}>
+            <SimpleItem dataField="firstName">
+              <Label text="Nombre" />
+              <RequiredRule />
+              <PatternRule
+                message="No puede usar digitos en el nombre"
+                pattern={/^[^0-9]+$/}
+              />
+              <StringLengthRule
+                min={2}
+                message="El nombre debe contener al menos 2 letra"
+              />
+            </SimpleItem>
+            <SimpleItem dataField="lastname">
+              <Label text="Apellido" />
+              <RequiredRule />
+              <PatternRule
+                message="No puede usar digitos en el apellido"
+                pattern={/^[^0-9]+$/}
+              />
+              <StringLengthRule
+                min={2}
+                message="El apellido debe contener al menos 2 letra"
+              />
+            </SimpleItem>
+            <SimpleItem
+              dataField="phoneNumber"
+              editorOptions={{
+                mask: '\\+\\(5\\0\\5) X0000000',
+                useMaskedValue: true,
+                maskRules: { X: /[2-9]/ },
+              }}
+            >
+              <Label text="Telefono" />
+              <RequiredRule />
+            </SimpleItem>
+            <SimpleItem dataField="email" editorType="dxTextBox">
+              <Label text="Correo" />
+              <RequiredRule />
+              <EmailRule message="Correo invalido" />
+            </SimpleItem>
+          </GroupItem>
+          <ButtonItem
+            horizontalAlignment="right"
+            buttonOptions={buttonOptionsProfile}
+          />
+        </Form>
+      </form>
+      <form onSubmit={handleSubmitPassword}>
+        <Form
+          formData={password}
+          readOnly={false}
+          showColonAfterLabel={true}
+          showValidationSummary={false}
+          validationGroup="passwordData"
+          onInitialized={setInstancePassword}
+          onFieldDataChanged={(e) => setInstancePassword(e)}
+        >
+          <GroupItem caption="Credenciales" colCount={2}>
+            <SimpleItem
+              dataField="password"
+              editorType="dxTextBox"
+              editorOptions={passwordOptions}
+            >
+              <Label text="Contraseña" />
+              <RequiredRule />
+            </SimpleItem>
+            <SimpleItem
+              name="confirmPassword"
+              editorType="dxTextBox"
+              editorOptions={confirmOptions}
+            >
+              <Label text="Repetir-Contraseña" />
+              <RequiredRule message="confirmar contraseña es requerido" />
+              <CompareRule
+                message="Contraseña y Confirmar contraseña no coinciden"
+                comparisonTarget={() => password.password}
+              />
+            </SimpleItem>
+          </GroupItem>
+          <ButtonItem
+            horizontalAlignment="right"
+            buttonOptions={buttonOptionsPassword}
+          />
+        </Form>
+      </form>
+      <LoadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        position={{ of: '#prifileContent' }}
+        visible={showLoading}
+      />
+    </div>
   );
 };
 

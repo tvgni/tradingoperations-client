@@ -100,8 +100,13 @@ img.dx-icon {
 .margen-top {
   margin-top: 20px;
 }
-.dx-popup-title.dx-toolbar {
+#containerElement .dx-popup-title.dx-toolbar {
   background: #fa5558;
+  color: white;
+}
+
+.dx-popup-title.dx-toolbar {
+  background: #ffa000;
   color: white;
 }
 

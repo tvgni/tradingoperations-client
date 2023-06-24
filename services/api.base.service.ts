@@ -14,7 +14,9 @@ async function request<TResponse>(
 ): Promise<TResponse> {
   // Attach access token
   const userData = await user();
+
   headers.append('Authorization', `bearer ${userData.tokenInfo?.accessToken}`);
+  headers.append('Content-Type', 'application/json');
 
   // Add query params
   let queryParams: URLSearchParams = new URLSearchParams();
@@ -26,28 +28,54 @@ async function request<TResponse>(
   // Request to the api
   const apiUrl = `${
     process.env.AUTH0_API_AUDIENCE_URL ?? ''
-  }v1${path}+${queryParams}`;
+  }${path}${queryParams}`;
+
+  let raw = null;
+  if (data?.body) {
+    raw = JSON.stringify(data?.body);
+  }
 
   const response = await fetch(apiUrl, {
     method,
     headers,
-    body: data?.body,
+    body: raw,
   });
-  // todo: Validar errores de servidor
-  return await response.json();
+
+  if (response.ok) {
+    if (response.status !== 204 && response.status !== 201) {
+      return await response.json();
+    } else {
+      return new Promise((resolve) => {
+        resolve({} as TResponse);
+      });
+    }
+  } else {
+    // todo: Validar errores de servidor
+    const errorResponse = await response.json();
+    throw new APIError(errorResponse.message, errorResponse);
+  }
+}
+
+class APIError extends Error {
+  response = null;
+  constructor(msg: string, response: any) {
+    super(msg);
+    this.response = response;
+    Object.setPrototypeOf(this, APIError.prototype);
+  }
 }
 
 const ApiService = {
   get: <TResponse>(path: string, queryParams = {}) =>
     request<TResponse>('GET', path, { queryParams }),
 
-  post: <TResponse>(path: string, body: any = {}, queryParams = {}) =>
+  post: <TResponse>(path: string, body: any = {}, queryParams = null) =>
     request<TResponse>('POST', path, { body, queryParams }),
 
-  put: <TResponse>(path: string, body: any = {}, queryParams = {}) =>
+  put: <TResponse>(path: string, body: any = {}, queryParams = null) =>
     request<TResponse>('PUT', path, { body, queryParams }),
 
-  delete: <TResponse>(path: string, body: any = {}, queryParams = {}) =>
+  delete: <TResponse>(path: string, body: any = {}, queryParams = null) =>
     request<TResponse>('DELETE', path, { body, queryParams }),
 };
 

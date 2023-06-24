@@ -5,14 +5,19 @@
       "/dashboard",
       "/usuarios",
       "/profile",
-      "/trades"
+      "/trades",
+      "/v1/users",
+      "/v1/users/email",
+      "/v1/users/password"
     ]
   },
   {
     "role": "Trader",
     "routes": [
       "/dashboard",
-      "/profile"
+      "/trades",
+      "/profile",
+      "/v1/users/password"
     ]
   }
 ]

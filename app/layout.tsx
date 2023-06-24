@@ -1,9 +1,8 @@
-import './theme/dx.material.traderacademic.css';
-import './globals.css';
 import React from 'react';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
+import './theme/dx.material.traderacademic.css';
+import './globals.css';
 import MenuLeft from './dashboard/navigations';
-import { user } from '@/utils/auth0.page';
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,16 +14,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const userSession = await user();
   return (
     <html lang="en">
       <UserProvider>
         <body className={'dx-viewport'}>
-          {userSession.isAuthenticated ? (
-            <MenuLeft session={userSession}>{children}</MenuLeft>
-          ) : (
-            children
-          )}
+          <MenuLeft>{children}</MenuLeft>
+          <div id="containerElement"></div>
         </body>
       </UserProvider>
     </html>

@@ -6,6 +6,8 @@ export default handleAuth({
       await handleLogin(req, res, {
         authorizationParams: {
           audience: process.env.AUTH0_API_AUDIENCE_URL, // AUTH0_AUDIENCE
+          scope: 'openid profile email offline_access',
+          useRefreshTokens: true,
         },
       });
     } catch (error: any) {
