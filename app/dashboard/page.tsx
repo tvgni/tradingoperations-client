@@ -1,10 +1,10 @@
 'use client';
+import Toolbar, { Item } from 'devextreme-react/toolbar';
+import notify from 'devextreme/ui/notify';
 import BarChart from '@/components/charts/bar';
 import LineChart from '@/components/charts/lineChart';
 import PieChartComponent from '@/components/charts/pieChart';
 import StackedBarChart from '@/components/charts/stackedBar';
-import Toolbar, { Item } from 'devextreme-react/toolbar';
-import notify from 'devextreme/ui/notify';
 
 export default function dashboarpage() {
   const backButtonOptions = {

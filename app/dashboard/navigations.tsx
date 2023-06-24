@@ -2,21 +2,15 @@
 import React, { useState } from 'react';
 import Drawer from 'devextreme-react/drawer';
 import Toolbar from 'devextreme-react/toolbar';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import dxDropDownButton from 'devextreme/ui/drop_down_button';
-import NavigationList from './navigationlist';
 import { useRouter } from 'next/navigation';
-import { authUser } from '@/models/auth0.model';
 import { ScrollView } from 'devextreme-react';
 import { locale, loadMessages } from 'devextreme/localization';
 import * as esMessages from 'devextreme/localization/messages/es.json';
+import NavigationList from './navigationlist';
 
-const MenuLeft = ({
-  session,
-  children,
-}: {
-  session: authUser;
-  children: any;
-}) => {
+const MenuLeft = ({ children }: { children: any }) => {
   loadMessages(esMessages);
   locale('es');
   const [opened, setOpened] = useState(true);
@@ -25,6 +19,10 @@ const MenuLeft = ({
   const handleLinkClick = () => {
     router.push('/profile');
   };
+
+  const { user, isLoading } = useUser();
+  if (!isLoading) {
+  }
 
   const toolbarItems = [
     {
@@ -48,8 +46,8 @@ const MenuLeft = ({
       location: 'after',
       widget: dxDropDownButton,
       options: {
-        text: session.user?.name ?? session.user?.nickname,
-        icon: session.user?.picture,
+        text: user?.name ?? user?.nickname,
+        icon: user?.picture,
         items: [
           {
             text: 'Mi Perfil',
